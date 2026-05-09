@@ -15,6 +15,7 @@ import { useStore } from "@/lib/store";
 import type { AuraMessage } from "@/lib/types";
 import { cn } from "@/lib/cn";
 import { lamportsToSol, truncatePubkey } from "@/lib/status";
+import { PushToTalk } from "./PushToTalk";
 
 export function AuraConversation() {
   const messages = useStore((s) => s.transcript);
@@ -115,7 +116,8 @@ export function AuraConversation() {
         </AnimatePresence>
       </div>
 
-      <footer className="border-t border-border px-4 py-2">
+      <footer className="flex items-center justify-between gap-3 border-t border-border px-4 py-2">
+        <PushToTalk />
         <span className="font-mono text-[9px] uppercase tracking-widest text-subtle">
           ws · {agentStatus}
         </span>
