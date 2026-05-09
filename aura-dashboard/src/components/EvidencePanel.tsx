@@ -37,8 +37,8 @@ type Provenance = {
   attestation_explorer_url: string;
 };
 
-const FLEET_HTTP = "http://localhost:8780";
-const AGENT_WS = "ws://localhost:8770/aura";
+const FLEET_HTTP = process.env.NEXT_PUBLIC_FLEET_HTTP ?? "http://localhost:8780";
+const AGENT_WS = process.env.NEXT_PUBLIC_AURA_WS ?? "ws://localhost:8770/aura";
 
 function totalFrames(robotId: string): number {
   return robotId === "robot_03" ? 450 : 900;
