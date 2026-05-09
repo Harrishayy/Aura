@@ -53,3 +53,7 @@ aura-dashboard/public/videos/*.mp4
 # Solana keypairs (NEVER commit)
 *keypair*.json
 !aura-dashboard/public/robot_metadata/*.json
+
+# Source documents (kept local, not in repo)
+*.pdf
+*.tex
