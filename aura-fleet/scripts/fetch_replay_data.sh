@@ -17,23 +17,29 @@ BASE="${BASE%/}"
 
 mkdir -p "$DATA_DIR"
 
+fetch_one() {
+  robot="$1"
+  fname="$2"
+  out="$DATA_DIR/$robot/$fname"
+  if [ -s "$out" ]; then
+    echo "skip  $robot/$fname"
+    return 0
+  fi
+  if curl -fsSL --max-time 120 "$BASE/$robot/$fname" -o "$out"; then
+    echo "fetch $robot/$fname ($(wc -c <"$out") bytes)"
+  else
+    echo "miss  $robot/$fname (placeholder)"
+    : > "$out"
+  fi
+}
+
 for robot in robot_01 robot_02 robot_03; do
   mkdir -p "$DATA_DIR/$robot"
   for fname in robot.jsonl episode_events.jsonl session_metadata.json; do
-    out="$DATA_DIR/$robot/$fname"
-    if [ -s "$out" ]; then
-      echo "skip $robot/$fname (already present)"
-      continue
-    fi
-    url="$BASE/$robot/$fname"
-    echo "fetch $url"
-    if ! curl -fsSL "$url" -o "$out"; then
-      # Tolerate missing optional files (e.g. empty episode_events.jsonl) by creating an empty placeholder.
-      echo "  not found on R2 — creating empty placeholder"
-      : > "$out"
-    fi
+    fetch_one "$robot" "$fname" &
   done
 done
+wait
 
 echo "replay data ready at $DATA_DIR"
 exec "$@"
