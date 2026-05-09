@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
+import { TopStrip } from "@/components/TopStrip";
+import { Sidebar } from "@/components/Sidebar";
 import { AuraConversation } from "@/components/AuraConversation";
+import { SocketManager } from "@/lib/socket";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,10 +31,14 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Header />
-        <div className="flex-1 flex">
-          <main className="flex-1 overflow-auto">{children}</main>
+      <body className="h-full">
+        <SocketManager />
+        <div className="flex h-full">
+          <Sidebar />
+          <div className="flex flex-1 flex-col overflow-hidden">
+            <TopStrip />
+            <main className="flex-1 overflow-auto">{children}</main>
+          </div>
           <AuraConversation />
         </div>
       </body>

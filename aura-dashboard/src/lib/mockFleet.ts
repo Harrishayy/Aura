@@ -1,31 +1,11 @@
-export type RobotStatus =
-  | "healthy"
-  | "anomaly"
-  | "idle"
-  | "paused"
-  | "offline";
-
-export type Robot = {
-  id: string;
-  name: string;
-  wallet_pubkey: string;
-  status: RobotStatus;
-  grade: "A" | "B" | "C" | "D" | "F";
-  runway_hours: number;
-  latest_event_ts: string;
-  video_url: string;
-  telemetry_ws_url: string;
-  compliance_ws_url: string;
-};
-
-export type FleetStatus = { robots: Robot[] };
+import type { FleetStatus } from "./types";
 
 export const mockFleet: FleetStatus = {
   robots: [
     {
       id: "robot_01",
       name: "Aura-Panda-01",
-      wallet_pubkey: "",
+      wallet_pubkey: "7xKn4d3vR9JZ2fL8mNpQ5sT1cBwUyXkH6gAeP4VrM2dY",
       status: "healthy",
       grade: "A",
       runway_hours: 42,
@@ -37,7 +17,7 @@ export const mockFleet: FleetStatus = {
     {
       id: "robot_02",
       name: "Aura-Panda-02",
-      wallet_pubkey: "",
+      wallet_pubkey: "9pQrK7TwYzN3bH5xVjR2cMfL8sD4uG1eAi6Pd2nXB3kt",
       status: "anomaly",
       grade: "C",
       runway_hours: 18,
@@ -49,7 +29,7 @@ export const mockFleet: FleetStatus = {
     {
       id: "robot_03",
       name: "Aura-Panda-03",
-      wallet_pubkey: "",
+      wallet_pubkey: "3mLb8XcN5RzP7vYjK1tH2sQ6uW4eD9fA2gBpV5xRn8wC",
       status: "idle",
       grade: "B",
       runway_hours: 72,
@@ -60,3 +40,5 @@ export const mockFleet: FleetStatus = {
     },
   ],
 };
+
+export type { Robot, RobotStatus, FleetStatus } from "./types";

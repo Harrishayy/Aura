@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Check, Copy, ExternalLink } from "lucide-react";
 import { truncatePubkey } from "@/lib/status";
+import { cn } from "@/lib/cn";
 
 type Identity = {
   name: string;
@@ -28,62 +30,129 @@ export function IdentityTile({ robotId }: { robotId: string }) {
       .catch(() => setIdentity(null));
   }, [robotId]);
 
-  if (!identity) {
-    return (
-      <div className="rounded-lg border border-border bg-surface p-4">
-        <div className="font-mono text-[11px] uppercase tracking-widest text-muted mb-3">
-          Identity
-        </div>
-        <div className="text-xs text-muted">loading…</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="rounded-lg border border-border bg-surface p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="font-mono text-[11px] uppercase tracking-widest text-muted">
-          Identity
-        </div>
-        <span className="inline-flex items-center gap-1 rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[10px] text-success font-mono uppercase">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-success" />
-          on chain
+    <section className="border border-border bg-surface-1">
+      <header className="flex items-center justify-between border-b border-border px-4 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-foreground">
+          identity · spec sheet
         </span>
-      </div>
+        <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground">
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-foreground" />
+          on-chain
+        </span>
+      </header>
 
-      <div className="space-y-1.5 text-sm">
-        <Row label="name" value={identity.name} />
-        <Row label="manufacturer" value={identity.manufacturer} />
-        <Row label="serial" value={identity.serial} mono />
-        <Row label="deployed" value={identity.deployment_date} mono />
-        {identity.wallet_pubkey && (
-          <Row label="wallet" value={truncatePubkey(identity.wallet_pubkey)} mono />
-        )}
-        {identity.agent_pda && (
-          <Row label="agent pda" value={truncatePubkey(identity.agent_pda)} mono />
-        )}
-        {identity.registration_tx && (
-          <a
-            href={identity.explorer_url}
-            target="_blank"
-            rel="noreferrer"
-            className="block pt-2 mt-2 border-t border-border text-xs text-primary hover:underline font-mono"
-          >
-            view on Solana Explorer ↗
-          </a>
-        )}
+      {!identity ? (
+        <div className="px-4 py-6 text-center font-mono text-[10px] uppercase tracking-widest text-subtle">
+          loading…
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-px bg-border">
+          <Row label="name" value={identity.name} />
+          <Row label="operator" value={identity.operator} />
+          <Row label="manufacturer" value={identity.manufacturer} />
+          <Row label="model" value={identity.model} />
+          <Row label="serial" value={identity.serial} mono />
+          <Row label="deployed" value={identity.deployment_date} mono />
+          {identity.wallet_pubkey && (
+            <Row
+              label="wallet"
+              value={truncatePubkey(identity.wallet_pubkey)}
+              copy={identity.wallet_pubkey}
+              mono
+            />
+          )}
+          {identity.agent_pda && (
+            <Row
+              label="agent pda"
+              value={truncatePubkey(identity.agent_pda)}
+              copy={identity.agent_pda}
+              mono
+            />
+          )}
+          {identity.episode_hash && (
+            <Row
+              label="episode hash"
+              value={truncatePubkey(identity.episode_hash, 6, 6)}
+              copy={identity.episode_hash}
+              mono
+              span2
+            />
+          )}
+          {identity.registration_tx && identity.explorer_url && (
+            <a
+              href={identity.explorer_url}
+              target="_blank"
+              rel="noreferrer"
+              className="col-span-2 flex items-center justify-between bg-surface-1 px-3 py-2 text-foreground hover:bg-surface-2"
+            >
+              <span className="font-mono text-[9px] uppercase tracking-widest text-subtle">
+                registration tx
+              </span>
+              <span className="flex items-center gap-1.5 font-mono text-xs">
+                solana explorer · devnet
+                <ExternalLink className="h-3 w-3" strokeWidth={1.5} />
+              </span>
+            </a>
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function Row({
+  label,
+  value,
+  mono,
+  copy,
+  span2,
+}: {
+  label: string;
+  value: string;
+  mono?: boolean;
+  copy?: string;
+  span2?: boolean;
+}) {
+  return (
+    <div className={cn("bg-surface-1 px-3 py-2", span2 && "col-span-2")}>
+      <div className="font-mono text-[9px] uppercase tracking-widest text-subtle">{label}</div>
+      <div className="mt-0.5 flex items-center justify-between gap-2">
+        <span
+          className={cn(
+            "truncate text-foreground",
+            mono ? "font-mono text-xs" : "text-sm",
+          )}
+        >
+          {value}
+        </span>
+        {copy && <CopyButton value={copy} />}
       </div>
     </div>
   );
 }
 
-function Row({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+function CopyButton({ value }: { value: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function onClick() {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* unavailable */
+    }
+  }
+
+  const Icon = copied ? Check : Copy;
   return (
-    <div className="flex justify-between gap-4">
-      <span className="text-xs text-muted font-mono uppercase">{label}</span>
-      <span className={`text-foreground ${mono ? "font-mono" : ""} text-right truncate`}>
-        {value}
-      </span>
-    </div>
+    <button
+      onClick={onClick}
+      className="text-subtle hover:text-foreground"
+      aria-label={`copy ${value}`}
+    >
+      <Icon className="h-3 w-3" strokeWidth={1.5} />
+    </button>
   );
 }
