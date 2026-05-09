@@ -19,6 +19,7 @@ import websockets
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 
 from .config import RobotConfig, load_fleet_config
+from .encord_labels import get_label_store
 
 log = structlog.get_logger()
 
@@ -213,6 +214,7 @@ async def _fleet_heartbeat() -> None:
 async def lifespan(app: FastAPI):
     cfg = load_fleet_config()
     log.info("fleet.startup", robots=[r.id for r in cfg.robots], port=cfg.aggregator.port)
+    get_label_store()
     tasks = [asyncio.create_task(_fleet_heartbeat())]
     for robot in cfg.robots:
         tasks.append(asyncio.create_task(_bridge_ws_pump(robot)))
@@ -283,6 +285,43 @@ async def identity(robot_id: str) -> dict:
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"no metadata for {robot_id}")
     return json.loads(path.read_text())
+
+
+@app.get("/robot/{robot_id}/encord_labels")
+async def encord_labels_window(robot_id: str, t0: float = 0.0, t1: float = 30.0) -> dict:
+    if _robot_cfg(robot_id) is None:
+        raise HTTPException(404, f"unknown robot: {robot_id}")
+    store = get_label_store()
+    labels = store.get_labels_in_window(robot_id, t0, t1)
+    prov = store.get_provenance(robot_id)
+    return {
+        "robot_id": robot_id,
+        "t0": t0,
+        "t1": t1,
+        "labels": labels,
+        "encord_label_hash": prov.get("encord_label_hash", ""),
+        "attestation_tx": prov.get("attestation_tx", ""),
+        "attestation_explorer_url": prov.get("attestation_explorer_url", ""),
+    }
+
+
+@app.get("/robot/{robot_id}/encord_labels/at_frame")
+async def encord_labels_at_frame(robot_id: str, frame: int = 0) -> dict:
+    if _robot_cfg(robot_id) is None:
+        raise HTTPException(404, f"unknown robot: {robot_id}")
+    store = get_label_store()
+    labels = store.get_labels_at_frame(robot_id, frame)
+    return {"robot_id": robot_id, "frame_index": frame, "labels": labels}
+
+
+@app.get("/robot/{robot_id}/encord_provenance")
+async def encord_provenance_endpoint(robot_id: str) -> dict:
+    if _robot_cfg(robot_id) is None:
+        raise HTTPException(404, f"unknown robot: {robot_id}")
+    prov = get_label_store().get_provenance(robot_id)
+    if not prov:
+        raise HTTPException(404, f"no provenance for {robot_id}")
+    return prov
 
 
 @app.websocket("/fleet")

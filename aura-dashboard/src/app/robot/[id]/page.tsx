@@ -10,6 +10,7 @@ import { VideoFeed } from "@/components/VideoFeed";
 import { LiveTelemetry } from "@/components/LiveTelemetry";
 import { ComplianceLog } from "@/components/ComplianceLog";
 import { PaymentTicker } from "@/components/PaymentTicker";
+import { EvidencePanel } from "@/components/EvidencePanel";
 import { cn } from "@/lib/cn";
 
 export default function RobotPage({
@@ -101,6 +102,7 @@ export default function RobotPage({
           <LiveTelemetry robotId={robot.id} />
           <ComplianceLog robotId={robot.id} />
           <PaymentTicker robotId={robot.id} />
+          <EvidencePanel robotId={robot.id} />
           <IdentityTile robotId={robot.id} />
         </div>
       </div>

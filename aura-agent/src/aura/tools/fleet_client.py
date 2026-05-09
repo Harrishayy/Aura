@@ -39,6 +39,18 @@ class FleetClient:
         r.raise_for_status()
         return r.json()
 
+    async def get_encord_labels(self, robot_id: str, t0: float, t1: float) -> dict:
+        r = await self._client.get(
+            f"/robot/{robot_id}/encord_labels", params={"t0": t0, "t1": t1}
+        )
+        r.raise_for_status()
+        return r.json()
+
+    async def get_encord_provenance(self, robot_id: str) -> dict:
+        r = await self._client.get(f"/robot/{robot_id}/encord_provenance")
+        r.raise_for_status()
+        return r.json()
+
     # The two methods below are wired through the bridge process via Auxin's existing
     # program; left as TODOs until the Auxin SDK path-dep is uncommented.
 

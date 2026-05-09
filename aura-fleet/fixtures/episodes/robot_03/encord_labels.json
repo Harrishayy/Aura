@@ -1,0 +1,1898 @@
+{
+  "robot_id": "robot_03",
+  "encord_project_id": "ENCORD_PROJECT_ID_ROBOT_03",
+  "encord_label_hash": "3af1bbbb723bd8de845928a5a90739e478019de2c171f34da7c2f3d909f9c0e1",
+  "video_fps": 30.0,
+  "labels": [
+    {
+      "frame_index": 0,
+      "timestamp_s": 0.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0000"
+    },
+    {
+      "frame_index": 0,
+      "timestamp_s": 0.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0000"
+    },
+    {
+      "frame_index": 0,
+      "timestamp_s": 0.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0000"
+    },
+    {
+      "frame_index": 10,
+      "timestamp_s": 0.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0010"
+    },
+    {
+      "frame_index": 10,
+      "timestamp_s": 0.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0010"
+    },
+    {
+      "frame_index": 10,
+      "timestamp_s": 0.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0010"
+    },
+    {
+      "frame_index": 20,
+      "timestamp_s": 0.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0020"
+    },
+    {
+      "frame_index": 20,
+      "timestamp_s": 0.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0020"
+    },
+    {
+      "frame_index": 20,
+      "timestamp_s": 0.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0020"
+    },
+    {
+      "frame_index": 30,
+      "timestamp_s": 1.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0030"
+    },
+    {
+      "frame_index": 30,
+      "timestamp_s": 1.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0030"
+    },
+    {
+      "frame_index": 30,
+      "timestamp_s": 1.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0030"
+    },
+    {
+      "frame_index": 40,
+      "timestamp_s": 1.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0040"
+    },
+    {
+      "frame_index": 40,
+      "timestamp_s": 1.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0040"
+    },
+    {
+      "frame_index": 40,
+      "timestamp_s": 1.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0040"
+    },
+    {
+      "frame_index": 50,
+      "timestamp_s": 1.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0050"
+    },
+    {
+      "frame_index": 50,
+      "timestamp_s": 1.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0050"
+    },
+    {
+      "frame_index": 50,
+      "timestamp_s": 1.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0050"
+    },
+    {
+      "frame_index": 60,
+      "timestamp_s": 2.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0060"
+    },
+    {
+      "frame_index": 60,
+      "timestamp_s": 2.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0060"
+    },
+    {
+      "frame_index": 60,
+      "timestamp_s": 2.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0060"
+    },
+    {
+      "frame_index": 70,
+      "timestamp_s": 2.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0070"
+    },
+    {
+      "frame_index": 70,
+      "timestamp_s": 2.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0070"
+    },
+    {
+      "frame_index": 70,
+      "timestamp_s": 2.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0070"
+    },
+    {
+      "frame_index": 80,
+      "timestamp_s": 2.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0080"
+    },
+    {
+      "frame_index": 80,
+      "timestamp_s": 2.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0080"
+    },
+    {
+      "frame_index": 80,
+      "timestamp_s": 2.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0080"
+    },
+    {
+      "frame_index": 90,
+      "timestamp_s": 3.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0090"
+    },
+    {
+      "frame_index": 90,
+      "timestamp_s": 3.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0090"
+    },
+    {
+      "frame_index": 90,
+      "timestamp_s": 3.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0090"
+    },
+    {
+      "frame_index": 100,
+      "timestamp_s": 3.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0100"
+    },
+    {
+      "frame_index": 100,
+      "timestamp_s": 3.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0100"
+    },
+    {
+      "frame_index": 100,
+      "timestamp_s": 3.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0100"
+    },
+    {
+      "frame_index": 110,
+      "timestamp_s": 3.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0110"
+    },
+    {
+      "frame_index": 110,
+      "timestamp_s": 3.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0110"
+    },
+    {
+      "frame_index": 110,
+      "timestamp_s": 3.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0110"
+    },
+    {
+      "frame_index": 120,
+      "timestamp_s": 4.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0120"
+    },
+    {
+      "frame_index": 120,
+      "timestamp_s": 4.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0120"
+    },
+    {
+      "frame_index": 120,
+      "timestamp_s": 4.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0120"
+    },
+    {
+      "frame_index": 130,
+      "timestamp_s": 4.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0130"
+    },
+    {
+      "frame_index": 130,
+      "timestamp_s": 4.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0130"
+    },
+    {
+      "frame_index": 130,
+      "timestamp_s": 4.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0130"
+    },
+    {
+      "frame_index": 140,
+      "timestamp_s": 4.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0140"
+    },
+    {
+      "frame_index": 140,
+      "timestamp_s": 4.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0140"
+    },
+    {
+      "frame_index": 140,
+      "timestamp_s": 4.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0140"
+    },
+    {
+      "frame_index": 150,
+      "timestamp_s": 5.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0150"
+    },
+    {
+      "frame_index": 150,
+      "timestamp_s": 5.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0150"
+    },
+    {
+      "frame_index": 150,
+      "timestamp_s": 5.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0150"
+    },
+    {
+      "frame_index": 160,
+      "timestamp_s": 5.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0160"
+    },
+    {
+      "frame_index": 160,
+      "timestamp_s": 5.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0160"
+    },
+    {
+      "frame_index": 160,
+      "timestamp_s": 5.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0160"
+    },
+    {
+      "frame_index": 170,
+      "timestamp_s": 5.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0170"
+    },
+    {
+      "frame_index": 170,
+      "timestamp_s": 5.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0170"
+    },
+    {
+      "frame_index": 170,
+      "timestamp_s": 5.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0170"
+    },
+    {
+      "frame_index": 180,
+      "timestamp_s": 6.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0180"
+    },
+    {
+      "frame_index": 180,
+      "timestamp_s": 6.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0180"
+    },
+    {
+      "frame_index": 180,
+      "timestamp_s": 6.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0180"
+    },
+    {
+      "frame_index": 190,
+      "timestamp_s": 6.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0190"
+    },
+    {
+      "frame_index": 190,
+      "timestamp_s": 6.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0190"
+    },
+    {
+      "frame_index": 190,
+      "timestamp_s": 6.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0190"
+    },
+    {
+      "frame_index": 200,
+      "timestamp_s": 6.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0200"
+    },
+    {
+      "frame_index": 200,
+      "timestamp_s": 6.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0200"
+    },
+    {
+      "frame_index": 200,
+      "timestamp_s": 6.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0200"
+    },
+    {
+      "frame_index": 210,
+      "timestamp_s": 7.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0210"
+    },
+    {
+      "frame_index": 210,
+      "timestamp_s": 7.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0210"
+    },
+    {
+      "frame_index": 210,
+      "timestamp_s": 7.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0210"
+    },
+    {
+      "frame_index": 220,
+      "timestamp_s": 7.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0220"
+    },
+    {
+      "frame_index": 220,
+      "timestamp_s": 7.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0220"
+    },
+    {
+      "frame_index": 220,
+      "timestamp_s": 7.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0220"
+    },
+    {
+      "frame_index": 230,
+      "timestamp_s": 7.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0230"
+    },
+    {
+      "frame_index": 230,
+      "timestamp_s": 7.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0230"
+    },
+    {
+      "frame_index": 230,
+      "timestamp_s": 7.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0230"
+    },
+    {
+      "frame_index": 240,
+      "timestamp_s": 8.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0240"
+    },
+    {
+      "frame_index": 240,
+      "timestamp_s": 8.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0240"
+    },
+    {
+      "frame_index": 240,
+      "timestamp_s": 8.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0240"
+    },
+    {
+      "frame_index": 250,
+      "timestamp_s": 8.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0250"
+    },
+    {
+      "frame_index": 250,
+      "timestamp_s": 8.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0250"
+    },
+    {
+      "frame_index": 250,
+      "timestamp_s": 8.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0250"
+    },
+    {
+      "frame_index": 260,
+      "timestamp_s": 8.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0260"
+    },
+    {
+      "frame_index": 260,
+      "timestamp_s": 8.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0260"
+    },
+    {
+      "frame_index": 260,
+      "timestamp_s": 8.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0260"
+    },
+    {
+      "frame_index": 270,
+      "timestamp_s": 9.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0270"
+    },
+    {
+      "frame_index": 270,
+      "timestamp_s": 9.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0270"
+    },
+    {
+      "frame_index": 270,
+      "timestamp_s": 9.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0270"
+    },
+    {
+      "frame_index": 280,
+      "timestamp_s": 9.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0280"
+    },
+    {
+      "frame_index": 280,
+      "timestamp_s": 9.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0280"
+    },
+    {
+      "frame_index": 280,
+      "timestamp_s": 9.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0280"
+    },
+    {
+      "frame_index": 290,
+      "timestamp_s": 9.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0290"
+    },
+    {
+      "frame_index": 290,
+      "timestamp_s": 9.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0290"
+    },
+    {
+      "frame_index": 290,
+      "timestamp_s": 9.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0290"
+    },
+    {
+      "frame_index": 300,
+      "timestamp_s": 10.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0300"
+    },
+    {
+      "frame_index": 300,
+      "timestamp_s": 10.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0300"
+    },
+    {
+      "frame_index": 300,
+      "timestamp_s": 10.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0300"
+    },
+    {
+      "frame_index": 310,
+      "timestamp_s": 10.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0310"
+    },
+    {
+      "frame_index": 310,
+      "timestamp_s": 10.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0310"
+    },
+    {
+      "frame_index": 310,
+      "timestamp_s": 10.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0310"
+    },
+    {
+      "frame_index": 320,
+      "timestamp_s": 10.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0320"
+    },
+    {
+      "frame_index": 320,
+      "timestamp_s": 10.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0320"
+    },
+    {
+      "frame_index": 320,
+      "timestamp_s": 10.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0320"
+    },
+    {
+      "frame_index": 330,
+      "timestamp_s": 11.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0330"
+    },
+    {
+      "frame_index": 330,
+      "timestamp_s": 11.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0330"
+    },
+    {
+      "frame_index": 330,
+      "timestamp_s": 11.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0330"
+    },
+    {
+      "frame_index": 340,
+      "timestamp_s": 11.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0340"
+    },
+    {
+      "frame_index": 340,
+      "timestamp_s": 11.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0340"
+    },
+    {
+      "frame_index": 340,
+      "timestamp_s": 11.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0340"
+    },
+    {
+      "frame_index": 350,
+      "timestamp_s": 11.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0350"
+    },
+    {
+      "frame_index": 350,
+      "timestamp_s": 11.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0350"
+    },
+    {
+      "frame_index": 350,
+      "timestamp_s": 11.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0350"
+    },
+    {
+      "frame_index": 360,
+      "timestamp_s": 12.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0360"
+    },
+    {
+      "frame_index": 360,
+      "timestamp_s": 12.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0360"
+    },
+    {
+      "frame_index": 360,
+      "timestamp_s": 12.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0360"
+    },
+    {
+      "frame_index": 370,
+      "timestamp_s": 12.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0370"
+    },
+    {
+      "frame_index": 370,
+      "timestamp_s": 12.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0370"
+    },
+    {
+      "frame_index": 370,
+      "timestamp_s": 12.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0370"
+    },
+    {
+      "frame_index": 380,
+      "timestamp_s": 12.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0380"
+    },
+    {
+      "frame_index": 380,
+      "timestamp_s": 12.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0380"
+    },
+    {
+      "frame_index": 380,
+      "timestamp_s": 12.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0380"
+    },
+    {
+      "frame_index": 390,
+      "timestamp_s": 13.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0390"
+    },
+    {
+      "frame_index": 390,
+      "timestamp_s": 13.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0390"
+    },
+    {
+      "frame_index": 390,
+      "timestamp_s": 13.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0390"
+    },
+    {
+      "frame_index": 400,
+      "timestamp_s": 13.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0400"
+    },
+    {
+      "frame_index": 400,
+      "timestamp_s": 13.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0400"
+    },
+    {
+      "frame_index": 400,
+      "timestamp_s": 13.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0400"
+    },
+    {
+      "frame_index": 410,
+      "timestamp_s": 13.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0410"
+    },
+    {
+      "frame_index": 410,
+      "timestamp_s": 13.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0410"
+    },
+    {
+      "frame_index": 410,
+      "timestamp_s": 13.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0410"
+    },
+    {
+      "frame_index": 420,
+      "timestamp_s": 14.0,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0420"
+    },
+    {
+      "frame_index": 420,
+      "timestamp_s": 14.0,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0420"
+    },
+    {
+      "frame_index": 420,
+      "timestamp_s": 14.0,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0420"
+    },
+    {
+      "frame_index": 430,
+      "timestamp_s": 14.333,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0430"
+    },
+    {
+      "frame_index": 430,
+      "timestamp_s": 14.333,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0430"
+    },
+    {
+      "frame_index": 430,
+      "timestamp_s": 14.333,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0430"
+    },
+    {
+      "frame_index": 440,
+      "timestamp_s": 14.667,
+      "type": "bbox",
+      "category": "workpiece_a",
+      "bbox": {
+        "x": 0.15,
+        "y": 0.2,
+        "w": 0.12,
+        "h": 0.15
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-workpiece_a-0440"
+    },
+    {
+      "frame_index": 440,
+      "timestamp_s": 14.667,
+      "type": "bbox",
+      "category": "cable_harness",
+      "bbox": {
+        "x": 0.65,
+        "y": 0.45,
+        "w": 0.08,
+        "h": 0.18
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-cable_harness-0440"
+    },
+    {
+      "frame_index": 440,
+      "timestamp_s": 14.667,
+      "type": "bbox",
+      "category": "tool_mount",
+      "bbox": {
+        "x": 0.42,
+        "y": 0.7,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "confidence": 1.0,
+      "encord_object_hash": "syn-bbox-r03-tool_mount-0440"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "encord_label_hash": "ed7ac25426a97808d587eda8df6fd294e5581731d15dccc572315884f3bd9901",
+  "exported_at": "2026-05-09T12:27:03.337174+00:00",
+  "label_count": 65,
+  "label_types": [
+    "keypoint",
+    "temporal_segment"
+  ],
+  "attestation_tx": "",
+  "attestation_explorer_url": ""
+}

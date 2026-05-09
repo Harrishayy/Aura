@@ -1,0 +1,11 @@
+{
+  "encord_label_hash": "e94d5f41cc9ad3f7bdc15e6d7379de6533969a2f8de65f6512ae06c84690d203",
+  "exported_at": "2026-05-09T12:27:03.337174+00:00",
+  "label_count": 46,
+  "label_types": [
+    "bbox",
+    "temporal_segment"
+  ],
+  "attestation_tx": "",
+  "attestation_explorer_url": ""
+}
