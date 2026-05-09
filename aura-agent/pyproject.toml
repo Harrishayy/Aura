@@ -29,7 +29,7 @@ dev-dependencies = [
 ]
 
 # [tool.uv.sources]
-# auxin-sdk = { path = "../../Auxin_Automata/sdk", editable = true }
+# auxin-sdk = { path = "../Auxin_Automata/sdk", editable = true }
 
 [build-system]
 requires = ["hatchling"]

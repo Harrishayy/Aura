@@ -141,8 +141,27 @@ async def test_investigate_anomaly_costs_sol_and_returns_diagnosis(monkeypatch) 
 
 
 @pytest.mark.asyncio
-async def test_investigate_anomaly_requires_event_id() -> None:
+async def test_investigate_anomaly_lenient_when_event_id_missing(monkeypatch) -> None:
+    """The Encord-aware rewrite is intentionally lenient: missing event_id no longer
+    short-circuits — the tool falls back to a default diagnosis. Verifies that path
+    so the lenient behaviour is locked in."""
     client = _mock_client()
+    fake_resp = MagicMock()
+    fake_resp.choices = [
+        MagicMock(message=MagicMock(content=json.dumps({
+            "proximate_cause": "manual inspection recommended",
+            "visual_evidence_cited": [],
+            "telemetry_evidence_cited": [],
+            "severity_assessment": "medium",
+            "recommended_action": "manual inspection recommended",
+            "confidence_pct": 0,
+        })))
+    ]
+    fake_oa = MagicMock()
+    fake_oa.chat.completions.create = AsyncMock(return_value=fake_resp)
+    monkeypatch.setattr(investigate_module, "AsyncOpenAI", lambda **_: fake_oa)
+
     result = await TOOLS["investigate_anomaly"].handler({"robot_id": "robot_01"}, client)
-    assert not result.success
+    assert result.success
     assert result.cost_lamports == 800_000
+    assert result.result["event_id"] == ""
