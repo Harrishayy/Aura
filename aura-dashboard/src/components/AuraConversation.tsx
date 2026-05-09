@@ -11,6 +11,8 @@ import {
   User,
   Sparkles,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useStore } from "@/lib/store";
 import type { AuraMessage } from "@/lib/types";
 import { cn } from "@/lib/cn";
@@ -98,9 +100,6 @@ export function AuraConversation() {
               className="px-2 py-8 text-center font-mono text-[10px] uppercase tracking-widest text-subtle"
             >
               awaiting voice loop
-              <div className="mt-1 normal-case tracking-normal">
-                connect aura agent on :8770
-              </div>
             </motion.div>
           )}
           {messages.map((msg, i) => (
@@ -132,7 +131,7 @@ function Message({ msg }: { msg: AuraMessage }) {
       <div className="flex items-start gap-2 px-1">
         <User className="mt-0.5 h-3.5 w-3.5 shrink-0 text-subtle" strokeWidth={1.5} />
         <div className="flex-1 rounded-sm bg-surface-2 px-2.5 py-1.5 text-sm text-muted">
-          {msg.content}
+          <Markdown text={msg.content} />
         </div>
       </div>
     );
@@ -142,7 +141,9 @@ function Message({ msg }: { msg: AuraMessage }) {
     return (
       <div className="flex items-start gap-2 px-1">
         <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-foreground" strokeWidth={1.5} />
-        <div className="flex-1 px-1 py-0.5 text-sm text-foreground">{msg.content}</div>
+        <div className="flex-1 px-1 py-0.5 text-sm text-foreground">
+          <Markdown text={msg.content} />
+        </div>
       </div>
     );
   }
@@ -152,6 +153,89 @@ function Message({ msg }: { msg: AuraMessage }) {
   }
 
   return null;
+}
+
+function Markdown({ text }: { text: string }) {
+  return (
+    <div className="prose-aura">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          p: ({ children }) => <p className="my-0.5 first:mt-0 last:mb-0">{children}</p>,
+          a: ({ href, children }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="text-foreground underline decoration-subtle underline-offset-2 hover:decoration-foreground"
+            >
+              {children}
+            </a>
+          ),
+          ul: ({ children }) => (
+            <ul className="my-1 list-disc pl-4 marker:text-subtle">{children}</ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="my-1 list-decimal pl-4 marker:text-subtle">{children}</ol>
+          ),
+          li: ({ children }) => <li className="my-0.5">{children}</li>,
+          strong: ({ children }) => (
+            <strong className="font-semibold text-foreground">{children}</strong>
+          ),
+          em: ({ children }) => <em className="italic">{children}</em>,
+          code: ({ children, ...props }) => {
+            const inline = !("data-language" in props);
+            return inline ? (
+              <code className="rounded-sm border border-border bg-surface-1 px-1 py-px font-mono text-[11px] text-foreground">
+                {children}
+              </code>
+            ) : (
+              <code className="font-mono text-[11px]">{children}</code>
+            );
+          },
+          pre: ({ children }) => (
+            <pre className="my-1 overflow-auto rounded-sm border border-border bg-surface-1 p-2 font-mono text-[11px] text-foreground">
+              {children}
+            </pre>
+          ),
+          h1: ({ children }) => (
+            <div className="mt-1 mb-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-foreground">
+              {children}
+            </div>
+          ),
+          h2: ({ children }) => (
+            <div className="mt-1 mb-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-foreground">
+              {children}
+            </div>
+          ),
+          h3: ({ children }) => (
+            <div className="mt-1 mb-0.5 font-mono text-[10px] uppercase tracking-widest text-muted">
+              {children}
+            </div>
+          ),
+          blockquote: ({ children }) => (
+            <blockquote className="my-1 border-l-2 border-border pl-2 text-muted">
+              {children}
+            </blockquote>
+          ),
+          hr: () => <hr className="my-2 border-border" />,
+          table: ({ children }) => (
+            <table className="my-1 w-full border-collapse text-[11px]">{children}</table>
+          ),
+          th: ({ children }) => (
+            <th className="border border-border bg-surface-2 px-1.5 py-0.5 text-left font-mono text-[10px] uppercase tracking-widest text-subtle">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="border border-border px-1.5 py-0.5">{children}</td>
+          ),
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  );
 }
 
 function ToolCard({ msg }: { msg: AuraMessage }) {

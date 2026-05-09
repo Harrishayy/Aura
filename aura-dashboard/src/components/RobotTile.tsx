@@ -24,7 +24,7 @@ export function RobotTile({ robot }: { robot: Robot }) {
     <Link
       href={`/robot/${robot.id}`}
       className={cn(
-        "group flex flex-col rounded-sm border border-border bg-surface-1 p-4 transition-colors",
+        "group flex h-full flex-col rounded-sm border border-border bg-surface-1 p-4 transition-colors",
         "hover:border-border-strong hover:bg-surface-2",
         style.ring,
       )}
@@ -55,6 +55,24 @@ export function RobotTile({ robot }: { robot: Robot }) {
         <Cell label="runway" value={`${robot.runway_hours.toFixed(0)}h`} />
         <Cell label="events·60s" value={`${eventsPerMin}`} />
         <Cell label="last evt" value={shortDelta(lastEventDelta)} />
+      </div>
+
+      <div className="relative mt-4 min-h-0 flex-1 overflow-hidden rounded-sm border border-border bg-black">
+        <video
+          src={`/videos/${robot.id}/third_person.mp4`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute left-2 top-2 flex items-center gap-1.5 rounded-sm bg-black/60 px-1.5 py-0.5 backdrop-blur-sm">
+          <span className="live-pip inline-block h-1.5 w-1.5 rounded-full bg-foreground" />
+          <span className="font-mono text-[9px] uppercase tracking-widest text-foreground">
+            third person
+          </span>
+        </div>
       </div>
 
       <div className="mt-4">

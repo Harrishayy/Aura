@@ -166,6 +166,8 @@ export function VideoFeed({
           <video
             ref={ref}
             src={src}
+            data-aura-label={title}
+            crossOrigin="anonymous"
             autoPlay={!controlled}
             muted
             loop={!controlled}

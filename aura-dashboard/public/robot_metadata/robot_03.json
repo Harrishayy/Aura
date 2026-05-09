@@ -6,9 +6,9 @@
   "deployment_date": "2026-04-01",
   "operator": "Aura Demo Fleet",
   "wallet_pubkey": "Erh1xMpbrmFSF6uCEE8mDYFmCiShQEd9jWycjFyfFf1n",
-  "agent_pda": "",
-  "registration_tx": "",
-  "explorer_url": "",
-  "episode_hash": "",
+  "agent_pda": "GN7ehWuEAxWaEQvRKheTGGz9UurzydecmRPB8vznhxF8",
+  "registration_tx": "TmSYpRHdafnnJvULgGeyhvMtSKoDGcUUmeJQkFwM6UXqLZc2efTRZtWN6qjegaa4z1iq1MA9Ci8im3m9m5zedhQ",
+  "explorer_url": "https://explorer.solana.com/tx/TmSYpRHdafnnJvULgGeyhvMtSKoDGcUUmeJQkFwM6UXqLZc2efTRZtWN6qjegaa4z1iq1MA9Ci8im3m9m5zedhQ?cluster=devnet",
+  "episode_hash": "sha256:f050838963d490f984f26fc5ab56ba94",
   "image_url": "/robot_images/panda_03.png"
 }

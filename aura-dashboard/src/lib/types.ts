@@ -24,6 +24,7 @@ export type JointFrame = {
   joints: number[];
   torques: number[];
   gripper: { open: boolean; force: number };
+  anomaly_flags?: string[];
 };
 
 export type ComplianceEvent = {

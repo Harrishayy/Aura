@@ -20,11 +20,13 @@ function decodeTelemetry(payload: Record<string, unknown>): JointFrame {
   const joints = (payload.joints as number[] | undefined) ?? [];
   const torques = (payload.torques as number[] | undefined) ?? [];
   const gripper = (payload.gripper as { open?: boolean; force?: number } | undefined) ?? {};
+  const flags = payload.anomaly_flags as string[] | undefined;
   return {
     t: asNum(payload.t, Date.now()),
     joints,
     torques,
     gripper: { open: !!gripper.open, force: asNum(gripper.force) },
+    anomaly_flags: Array.isArray(flags) ? flags : [],
   };
 }
 

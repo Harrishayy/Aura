@@ -12,6 +12,7 @@ import { ComplianceLog } from "@/components/ComplianceLog";
 import { PaymentTicker } from "@/components/PaymentTicker";
 import { EvidencePanel } from "@/components/EvidencePanel";
 import { ScrubBar } from "@/components/ScrubBar";
+import { WalletBalance } from "@/components/WalletBalance";
 import { useTimeline, useScrub, frameAt, frameWindow } from "@/lib/timeline";
 import { useReadinessBarrier } from "@/lib/videoSync";
 import { assetUrl } from "@/lib/assetUrl";
@@ -134,6 +135,7 @@ export default function Robot01Page() {
         </div>
 
         <div className="flex flex-col gap-4 overflow-auto pr-1">
+          <WalletBalance pubkey={robot.wallet_pubkey} />
           <LiveTelemetry robotId={ROBOT_ID} override={frame} windowFrames={window} />
           <ComplianceLog robotId={ROBOT_ID} />
           <PaymentTicker robotId={ROBOT_ID} />

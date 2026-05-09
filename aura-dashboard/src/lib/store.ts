@@ -79,7 +79,20 @@ export const useStore = create<State>((set) => ({
     }),
 
   setComplianceBackfill: (robotId, events) =>
-    set((s) => ({ compliance: { ...s.compliance, [robotId]: events.slice(0, COMPLIANCE_CAP) } })),
+    set((s) => {
+      const existing = s.compliance[robotId] ?? [];
+      const seen = new Set(existing.map((e) => e.tx_signature || e.hash));
+      const merged = [...existing];
+      for (const e of events) {
+        const key = e.tx_signature || e.hash;
+        if (key && seen.has(key)) continue;
+        merged.push(e);
+        if (key) seen.add(key);
+      }
+      merged.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+      if (merged.length > COMPLIANCE_CAP) merged.length = COMPLIANCE_CAP;
+      return { compliance: { ...s.compliance, [robotId]: merged } };
+    }),
 
   pushTranscript: (m) =>
     set((s) => {

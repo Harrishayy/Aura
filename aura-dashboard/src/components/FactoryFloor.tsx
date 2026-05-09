@@ -66,7 +66,7 @@ export function FactoryFloor() {
         ]}
       />
 
-      <div className="mt-5 grid flex-1 grid-cols-3 gap-4">
+      <div className="mt-5 grid flex-1 grid-cols-3 grid-rows-1 gap-4">
         {robots.map((robot) => (
           <RobotTile key={robot.id} robot={robot} />
         ))}
