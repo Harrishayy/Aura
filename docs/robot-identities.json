@@ -1,0 +1,163 @@
+{
+  "fleet_id": "AURA-DEMO-FLEET-001",
+  "generated_at": "2026-05-09T12:40:00Z",
+  "robots": [
+    {
+      "robot_id": "ARX-IMR-014",
+      "display_name": "Aurex IMR-014",
+      "role": "Intralogistics Mobile Robot",
+      "autonomy_level": "T0/T1 constrained autonomy (policy-gated)",
+      "capabilities": [
+        "autonomous navigation with dynamic rerouting",
+        "dock/charge station handshake",
+        "load presence and basic weight validation",
+        "congestion-aware speed control",
+        "mission queue execution (WMS/MES dispatch)"
+      ],
+      "wallet_enabled": true,
+      "requires_confirmation_for": [
+        "resume_after_safety_stop",
+        "enter_restricted_zone",
+        "operate_with_degraded_perception",
+        "override_zone_speed_limit",
+        "remote_diagnostics_bundle_upload"
+      ],
+      "escalation_rules": [
+        {
+          "condition": "localization_quality_below_threshold_for_seconds >= 30",
+          "required_tier": "T1",
+          "action": "pause_and_request_supervisor_review"
+        },
+        {
+          "condition": "repeated_obstacle_in_same_aisle_segment_count >= 3",
+          "required_tier": "T1",
+          "action": "request_area_check_and_alternate_route_approval"
+        },
+        {
+          "condition": "safety_stop_triggered == true",
+          "required_tier": "T2",
+          "action": "require_safety_approval_before_resuming"
+        },
+        {
+          "condition": "requested_zone_class in ['restricted','forklift_only','chemical_adjacency']",
+          "required_tier": "T2",
+          "action": "require_zone_entry_authorization"
+        },
+        {
+          "condition": "degraded_perception_mode_requested == true",
+          "required_tier": "T3",
+          "action": "escalate_for_sop_deviation_and_timeboxed_operation"
+        }
+      ],
+      "current_status": {
+        "state": "ACTIVE",
+        "location": "Aisle 3 / Line-side Dock D2",
+        "battery_pct": 68,
+        "last_check_in": "2026-05-09T12:38:45Z",
+        "active_mission": "Deliver tote batch K-18 to Line 2"
+      },
+      "operational_summary": "IMR executing line-side deliveries in shared aisles. Autonomy is policy-gated; restricted zones and post-safety-stop resumes require human approval."
+    },
+    {
+      "robot_id": "QIU-VIS-022",
+      "display_name": "Q-Inspect Cell 022",
+      "role": "Quality Inspection Unit",
+      "autonomy_level": "T0 autonomous inspection; T2 gated for recipe changes and borderline dispositions",
+      "capabilities": [
+        "camera-based defect detection and dimensional checks",
+        "recipe-based inspection configuration (SKU/variant)",
+        "PLC handshake for reject lane and line stop signals",
+        "evidence package generation (images + measurements)"
+      ],
+      "wallet_enabled": true,
+      "requires_confirmation_for": [
+        "inspection_recipe_change",
+        "cloud_inference_for_borderline_defects",
+        "release_product_with_low_confidence",
+        "bypass_inspection_cell"
+      ],
+      "escalation_rules": [
+        {
+          "condition": "inspection_confidence < 0.85 AND feature_class == 'safety_critical'",
+          "required_tier": "T2",
+          "action": "hold_lot_and_request_quality_compliance_approval"
+        },
+        {
+          "condition": "recipe_mismatch_detected == true",
+          "required_tier": "T2",
+          "action": "block_recipe_activation_until_approved"
+        },
+        {
+          "condition": "reject_rate_pct >= 8 FOR minutes >= 10",
+          "required_tier": "T1",
+          "action": "request_supervisor_review_and_line_condition_check"
+        },
+        {
+          "condition": "bypass_requested == true OR release_with_uncertainty_requested == true",
+          "required_tier": "T3",
+          "action": "escalate_for_sop_deviation_and_management_signoff"
+        }
+      ],
+      "current_status": {
+        "state": "ACTIVE",
+        "location": "Inspection Cell 022 / Conveyor 2",
+        "recipe": "SKU-ALPHA-7 / Rev C",
+        "last_check_in": "2026-05-09T12:39:12Z",
+        "throughput_ppm": 42
+      },
+      "operational_summary": "Inspection cell running SKU-ALPHA-7. Borderline defects and recipe changes are gated; evidence packages are logged for audit and on-chain anchoring."
+    },
+    {
+      "robot_id": "MSR-007",
+      "display_name": "Maint-Safety Rover 007",
+      "role": "Maintenance & Safety Rover",
+      "autonomy_level": "T0 patrol with T2/T3 gated safety actions",
+      "capabilities": [
+        "thermal scanning for cabinets/motors (external surfaces)",
+        "acoustic anomaly detection for rotating equipment",
+        "spill and obstruction detection in walkways",
+        "safety signage and guarding verification snapshots",
+        "maintenance ticket creation with context attachments"
+      ],
+      "wallet_enabled": true,
+      "requires_confirmation_for": [
+        "initiate_safety_hold_workflow",
+        "enter_loto_proximity_zone",
+        "cloud_inference_for_thermal_classification",
+        "suppress_safety_notification",
+        "declare_incident"
+      ],
+      "escalation_rules": [
+        {
+          "condition": "thermal_delta_c >= 25 AND location_class == 'electrical_area'",
+          "required_tier": "T2",
+          "action": "require_safety_approval_and_initiate_controlled_shutdown_assessment"
+        },
+        {
+          "condition": "requested_zone_class == 'loto_proximity'",
+          "required_tier": "T2",
+          "action": "require_loto_authorization_and_timeboxed_entry"
+        },
+        {
+          "condition": "thermal_excursion_repeats_in_shift_count >= 2",
+          "required_tier": "T3",
+          "action": "escalate_for_incident_review_and_management_notification"
+        },
+        {
+          "condition": "safety_alert_suppression_requested == true",
+          "required_tier": "T3",
+          "action": "block_request_and_escalate_for_policy_review"
+        }
+      ],
+      "current_status": {
+        "state": "ACTIVE",
+        "location": "Perimeter Route P1 / Near Electrical Room ER-2",
+        "battery_pct": 54,
+        "last_check_in": "2026-05-09T12:39:40Z",
+        "active_mission": "Thermal patrol + spill check (Route P1)"
+      },
+      "operational_summary": "Rover running patrol near restricted areas. Thermal excursions and LOTO-adjacent operations are gated by safety approvals and escalations."
+    }
+  ]
+}
+
