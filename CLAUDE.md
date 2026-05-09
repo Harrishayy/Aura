@@ -82,8 +82,8 @@ When the user asks "what model should I use for this prompt?", default to:
 
 - **Sonnet 4.6** — boilerplate, integration code, React/Tailwind, schema work, WS plumbing. (P1, P3, P4, P5, P6, P7, P10, etc.)
 - **Opus 4.7** — fiddly reasoning: timestamp alignment (P2 VideoSource), wiring + confirmation flow (P9), pitch prose (P8).
-- **Haiku 4.5** — Aura's runtime confirmation classifier only (one-word YES/NO, 1s budget).
 - **GPT-4o** — Aura's runtime reasoning model (sponsor credits, mature streaming tool-use). Not for code generation.
+- **GPT-4o-mini** — Aura's runtime confirmation classifier (one-word YES/NO, 1s budget). Playbook originally called for Claude Haiku 4.5; team swapped to OpenAI to avoid a second provider key. Trade-off: lost the "robots pay multiple inference vendors" pitch beat.
 
 ## Style & code
 
