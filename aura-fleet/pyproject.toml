@@ -17,7 +17,7 @@ dependencies = [
   "python-dotenv>=1.0",
   # "solana>=0.36",
   # "solders>=0.23",
-  # "auxin-sdk",  # uncomment when Auxin_Automata is checked out alongside
+  "auxin-sdk",
 ]
 
 [tool.uv]
@@ -27,8 +27,8 @@ dev-dependencies = [
   "ruff>=0.7",
 ]
 
-# [tool.uv.sources]
-# auxin-sdk = { path = "../../Auxin_Automata/sdk", editable = true }
+[tool.uv.sources]
+auxin-sdk = { path = "../Auxin_Automata/sdk", editable = true }
 
 [build-system]
 requires = ["hatchling"]

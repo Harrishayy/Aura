@@ -1,0 +1,4 @@
+{"timestamp": 5.0, "type": "pick_started", "payload": {}}
+{"timestamp": 15.0, "type": "pick_completed", "payload": {}}
+{"timestamp": 20.0, "type": "pick_started", "payload": {}}
+{"timestamp": 28.0, "type": "pick_completed", "payload": {}}

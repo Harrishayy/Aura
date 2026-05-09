@@ -57,3 +57,6 @@ aura-dashboard/public/videos/*.mp4
 # Source documents (kept local, not in repo)
 *.pdf
 *.tex
+
+# Auxin Automata — immutable infrastructure, referenced as path dep only
+Auxin_Automata/

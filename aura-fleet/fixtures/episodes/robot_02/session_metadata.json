@@ -1,0 +1,10 @@
+{
+  "task_description": "Pick-and-place with gripper anomaly injection at t=12s.",
+  "duration_s": 30.0,
+  "success_flag": false,
+  "config": {
+    "realsense": {
+      "fps": 30
+    }
+  }
+}

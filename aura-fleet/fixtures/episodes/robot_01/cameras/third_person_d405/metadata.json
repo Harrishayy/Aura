@@ -1,0 +1,9 @@
+{
+  "serial": "D405-TP-0001",
+  "fps": 30,
+  "resolution": [
+    640,
+    480
+  ],
+  "depth": false
+}

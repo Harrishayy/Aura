@@ -1,0 +1,10 @@
+{
+  "task_description": "Idle hold \u2014 robot parked at home position.",
+  "duration_s": 15.0,
+  "success_flag": true,
+  "config": {
+    "realsense": {
+      "fps": 30
+    }
+  }
+}

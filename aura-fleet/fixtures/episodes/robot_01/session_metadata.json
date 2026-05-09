@@ -1,0 +1,10 @@
+{
+  "task_description": "Pick-and-place: transfer block from tray A to tray B, twice.",
+  "duration_s": 30.0,
+  "success_flag": true,
+  "config": {
+    "realsense": {
+      "fps": 30
+    }
+  }
+}
