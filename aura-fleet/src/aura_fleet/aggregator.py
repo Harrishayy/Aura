@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import asyncio
 import json
+import time
 from contextlib import asynccontextmanager
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -29,10 +31,30 @@ _metadata_dir = Path(__file__).resolve().parents[3] / "aura-dashboard" / "public
 _GRADES = {"robot_01": "A", "robot_02": "C", "robot_03": "B"}
 _RUNWAY = {"robot_01": 42.0, "robot_02": 38.0, "robot_03": 51.0}
 
-_fleet_subscribers: set[WebSocket] = set()
+# Per-subscriber bounded outbound queue. Drop-oldest on overflow so a slow
+# client never stalls the bridge pump. 64 frames @ 30 Hz aggregate ≈ 2s buffer.
+_SUB_QUEUE_MAX = 64
+_SEND_TIMEOUT_S = 1.0
+
+
+@dataclass(eq=False)
+class _Subscriber:
+    ws: WebSocket
+    queue: asyncio.Queue[str] = field(default_factory=lambda: asyncio.Queue(maxsize=_SUB_QUEUE_MAX))
+    dropped: int = 0
+
+
+_fleet_subscribers: set[_Subscriber] = set()
 _selected_subscribers: set[WebSocket] = set()
 
 _cfg = None
+
+# /fleet/status is hit every 2s by every connected dashboard. Cache the upstream
+# /healthz fan-out for a short window so bursts of dashboards don't multiply the
+# loop's HTTP load.
+_STATUS_CACHE_TTL_S = 1.5
+_status_cache: dict[str, object] = {"ts": 0.0, "value": None}
+_status_lock = asyncio.Lock()
 
 
 def _get_cfg():
@@ -133,7 +155,7 @@ def _translate_bridge_message(robot_id: str, raw_payload: dict) -> dict | None:
     if msg_type == "compliance_event":
         reason_int = data.get("reason_code", 0x0001)
         reason_str = _REASON_CODE_LABELS.get(reason_int, f"0x{reason_int:04x}")
-        tx_sig = data.get("tx_signature") or ""
+        tx_sig = data.get("signature") or data.get("tx_signature") or ""
         explorer_url = (
             f"{_EXPLORER_BASE}/tx/{tx_sig}?cluster=devnet" if tx_sig else ""
         )
@@ -167,11 +189,56 @@ def _translate_bridge_message(robot_id: str, raw_payload: dict) -> dict | None:
     return None
 
 
+def _enqueue_to_subscribers(msg: str) -> None:
+    """Fan-out a message to every fleet subscriber via their bounded queue.
+
+    Non-blocking: if a subscriber's queue is full, drop the oldest frame and
+    push the new one. This guarantees the bridge pump never stalls on a slow
+    downstream — telemetry streaming stays continuous for healthy clients.
+    """
+    if not _fleet_subscribers:
+        return
+    for sub in list(_fleet_subscribers):
+        q = sub.queue
+        try:
+            q.put_nowait(msg)
+        except asyncio.QueueFull:
+            try:
+                q.get_nowait()
+                sub.dropped += 1
+            except asyncio.QueueEmpty:
+                pass
+            try:
+                q.put_nowait(msg)
+            except asyncio.QueueFull:
+                pass
+
+
+async def _subscriber_pump(sub: _Subscriber) -> None:
+    """Drain the subscriber's queue to its websocket. Owns the only send path
+    for that socket, eliminating concurrent-send races between bridge pumps."""
+    try:
+        while True:
+            msg = await sub.queue.get()
+            try:
+                await asyncio.wait_for(sub.ws.send_text(msg), timeout=_SEND_TIMEOUT_S)
+            except (asyncio.TimeoutError, Exception):
+                break
+    finally:
+        _fleet_subscribers.discard(sub)
+        try:
+            await sub.ws.close()
+        except Exception:
+            pass
+
+
 async def _bridge_ws_pump(robot: RobotConfig) -> None:
     uri = f"ws://localhost:{robot.bridge_ws_port}"
     while True:
         try:
-            async with websockets.connect(uri, open_timeout=5) as ws:
+            async with websockets.connect(
+                uri, open_timeout=5, ping_interval=20, ping_timeout=20
+            ) as ws:
                 log.info("bridge_ws.connected", robot_id=robot.id, uri=uri)
                 async for raw in ws:
                     if not _fleet_subscribers:
@@ -184,14 +251,10 @@ async def _bridge_ws_pump(robot: RobotConfig) -> None:
                         msg = json.dumps(translated)
                     except Exception:
                         continue
-                    for sub in list(_fleet_subscribers):
-                        try:
-                            await sub.send_text(msg)
-                        except Exception:
-                            _fleet_subscribers.discard(sub)
+                    _enqueue_to_subscribers(msg)
         except Exception as exc:
             log.warning("bridge_ws.disconnected", robot_id=robot.id, error=str(exc))
-        await asyncio.sleep(5)
+        await asyncio.sleep(2)
 
 
 async def _fleet_heartbeat() -> None:
@@ -204,11 +267,7 @@ async def _fleet_heartbeat() -> None:
             "type": "heartbeat",
             "payload": {"ts": datetime.now(timezone.utc).isoformat()},
         })
-        for ws in list(_fleet_subscribers):
-            try:
-                await ws.send_text(msg)
-            except Exception:
-                _fleet_subscribers.discard(ws)
+        _enqueue_to_subscribers(msg)
 
 
 @asynccontextmanager
@@ -244,9 +303,21 @@ async def healthz() -> dict:
 
 @app.get("/fleet/status")
 async def fleet_status() -> dict:
-    cfg = _get_cfg()
-    robots = await asyncio.gather(*[_fetch_bridge_status(r) for r in cfg.robots])
-    return {"robots": list(robots)}
+    now = time.monotonic()
+    cached = _status_cache.get("value")
+    if cached is not None and (now - float(_status_cache.get("ts", 0.0))) < _STATUS_CACHE_TTL_S:
+        return cached  # type: ignore[return-value]
+    async with _status_lock:
+        now = time.monotonic()
+        cached = _status_cache.get("value")
+        if cached is not None and (now - float(_status_cache.get("ts", 0.0))) < _STATUS_CACHE_TTL_S:
+            return cached  # type: ignore[return-value]
+        cfg = _get_cfg()
+        robots = await asyncio.gather(*[_fetch_bridge_status(r) for r in cfg.robots])
+        body = {"robots": list(robots)}
+        _status_cache["value"] = body
+        _status_cache["ts"] = time.monotonic()
+        return body
 
 
 @app.get("/robot/{robot_id}/status")
@@ -284,11 +355,7 @@ async def agent_compliance(robot_id: str, body: dict) -> dict:
         "explorer_url": "",
     }
     msg = json.dumps({"robot_id": robot_id, "type": "compliance", "payload": payload})
-    for sub in list(_fleet_subscribers):
-        try:
-            await sub.send_text(msg)
-        except Exception:
-            _fleet_subscribers.discard(sub)
+    _enqueue_to_subscribers(msg)
     log.info("fleet.agent_compliance", robot_id=robot_id, tool=body.get("tool_name"))
     return {"logged": True}
 
@@ -305,11 +372,7 @@ async def agent_payment(robot_id: str, body: dict) -> dict:
         "privacy_routed": False,
     }
     msg = json.dumps({"robot_id": robot_id, "type": "payment", "payload": payload})
-    for sub in list(_fleet_subscribers):
-        try:
-            await sub.send_text(msg)
-        except Exception:
-            _fleet_subscribers.discard(sub)
+    _enqueue_to_subscribers(msg)
     log.info("fleet.agent_payment", robot_id=robot_id, lamports=body.get("lamports"))
     return {"logged": True}
 
@@ -378,16 +441,25 @@ async def encord_provenance_endpoint(robot_id: str) -> dict:
 @app.websocket("/fleet")
 async def fleet_ws(websocket: WebSocket) -> None:
     await websocket.accept()
-    _fleet_subscribers.add(websocket)
+    sub = _Subscriber(ws=websocket)
+    _fleet_subscribers.add(sub)
+    pump = asyncio.create_task(_subscriber_pump(sub))
     log.info("fleet.subscriber.connect", total=len(_fleet_subscribers))
     try:
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:
         pass
+    except Exception:
+        pass
     finally:
-        _fleet_subscribers.discard(websocket)
-        log.info("fleet.subscriber.disconnect", total=len(_fleet_subscribers))
+        _fleet_subscribers.discard(sub)
+        pump.cancel()
+        log.info(
+            "fleet.subscriber.disconnect",
+            total=len(_fleet_subscribers),
+            dropped_frames=sub.dropped,
+        )
 
 
 @app.websocket("/selected")
