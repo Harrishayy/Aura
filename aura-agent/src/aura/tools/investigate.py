@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import asyncio
 import json
+from typing import TYPE_CHECKING
 
 from openai import AsyncOpenAI
 
 from .fleet_client import FleetClient, resolve_robot_id
+
+if TYPE_CHECKING:
+    from . import ToolResult
 
 COST_LAMPORTS = 800_000
 VIDEO_FPS = 30.0
