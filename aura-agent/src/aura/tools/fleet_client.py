@@ -122,32 +122,27 @@ class FleetClient:
         r.raise_for_status()
         return r.json()
 
-    # The two methods below are wired through the bridge process via Auxin's existing
-    # program; left as TODOs until the Auxin SDK path-dep is uncommented.
     async def trigger_inference_payment(
         self, robot_id: str, lamports: int, reason: str
     ) -> str | None:
-        # TODO: wire to Auxin's stream_compute_payment via the bridge for {robot_id}.
-        # Returns the tx signature once the auxin-sdk path-dep is uncommented in
-        # pyproject.toml. Until then, we return None and tools surface a missing
-        # tx_signature in the on-chain receipt — voice round-trip remains unblocked.
-        log.warning(
-            "auxin.payment.skipped",
-            reason="auxin_sdk_unavailable",
-            robot_id=robot_id,
-            lamports=lamports,
-            note=reason,
-        )
-        return None
+        """Broadcast a payment event to the dashboard via the aggregator."""
+        try:
+            r = await self._client.post(
+                f"/robot/{robot_id}/payment",
+                json={"lamports": lamports, "reason": reason},
+            )
+            r.raise_for_status()
+        except Exception as exc:
+            log.warning("payment.broadcast_failed", robot_id=robot_id, error=str(exc))
+        return None  # tx_signature populated when on-chain wiring is live
 
     async def trigger_compliance_log(self, robot_id: str, payload: dict) -> str | None:
-        # TODO: wire to Auxin's log_compliance_event via the bridge for {robot_id}.
-        log.warning(
-            "auxin.compliance.skipped",
-            reason="auxin_sdk_unavailable",
-            robot_id=robot_id,
-            payload=payload,
-        )
+        """Broadcast a compliance event to the dashboard via the aggregator."""
+        try:
+            r = await self._client.post(f"/robot/{robot_id}/compliance", json=payload)
+            r.raise_for_status()
+        except Exception as exc:
+            log.warning("compliance.broadcast_failed", robot_id=robot_id, error=str(exc))
         return None
 
 

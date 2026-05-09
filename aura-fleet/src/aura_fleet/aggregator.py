@@ -271,6 +271,48 @@ async def recent_events(robot_id: str, n: int = 5) -> list[dict]:
     ]
 
 
+@app.post("/robot/{robot_id}/compliance")
+async def agent_compliance(robot_id: str, body: dict) -> dict:
+    """Called by the Aura agent to surface tool-call compliance events in the dashboard."""
+    payload = {
+        "hash": f"agent:{body.get('tool_name', 'tool')}:{int(datetime.now(timezone.utc).timestamp())}",
+        "severity": body.get("severity", 1),
+        "reason_code": body.get("tool_name", "agent_tool"),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "tx_signature": body.get("tx_signature", ""),
+        "explorer_url": "",
+    }
+    msg = json.dumps({"robot_id": robot_id, "type": "compliance", "payload": payload})
+    for sub in list(_fleet_subscribers):
+        try:
+            await sub.send_text(msg)
+        except Exception:
+            _fleet_subscribers.discard(sub)
+    log.info("fleet.agent_compliance", robot_id=robot_id, tool=body.get("tool_name"))
+    return {"logged": True}
+
+
+@app.post("/robot/{robot_id}/payment")
+async def agent_payment(robot_id: str, body: dict) -> dict:
+    """Called by the Aura agent to surface inference payments in the dashboard."""
+    payload = {
+        "amount_lamports": body.get("lamports", 0),
+        "provider_pubkey": "aura-agent",
+        "tx_signature": body.get("tx_signature", ""),
+        "explorer_url": "",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "privacy_routed": False,
+    }
+    msg = json.dumps({"robot_id": robot_id, "type": "payment", "payload": payload})
+    for sub in list(_fleet_subscribers):
+        try:
+            await sub.send_text(msg)
+        except Exception:
+            _fleet_subscribers.discard(sub)
+    log.info("fleet.agent_payment", robot_id=robot_id, lamports=body.get("lamports"))
+    return {"logged": True}
+
+
 @app.post("/robot/{robot_id}/inject_anomaly")
 async def inject_anomaly(robot_id: str) -> dict:
     flag = Path(f"/tmp/aura_inject_{robot_id}")

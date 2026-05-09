@@ -18,7 +18,7 @@ dependencies = [
   "sounddevice>=0.5",
   "numpy>=2.0",
   "python-dotenv>=1.0",
-  # "auxin-sdk",  # uncomment when Auxin_Automata is checked out alongside
+  # "auxin-sdk",  # uncomment for on-chain compliance/payment logging
 ]
 
 [tool.uv]
@@ -29,7 +29,7 @@ dev-dependencies = [
 ]
 
 # [tool.uv.sources]
-# auxin-sdk = { path = "../../Auxin_Automata/sdk", editable = true }
+# auxin-sdk = { path = "../Auxin_Automata/sdk", editable = true }
 
 [build-system]
 requires = ["hatchling"]

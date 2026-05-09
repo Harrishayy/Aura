@@ -122,9 +122,19 @@ def _build_spoken_reasoning(diagnosis: dict, labels: list[dict]) -> str:
 
 async def handle_investigate_anomaly(args: dict, client: FleetClient) -> "ToolResult":
     from . import ToolResult
+    from ..config import get_settings
 
     robot_id = resolve_robot_id(args, client) or args.get("robot_id") or "robot_02"
     event_id = args.get("event_id", "")
+
+    if not event_id:
+        return ToolResult(
+            tool_name="investigate_anomaly",
+            success=False,
+            robot_id=robot_id,
+            cost_lamports=COST_LAMPORTS,
+            reasoning="No event ID provided — please specify a compliance event to investigate.",
+        )
 
     try:
         events = await asyncio.wait_for(client.get_recent_events(robot_id, n=5), timeout=5.0)
@@ -157,7 +167,7 @@ async def handle_investigate_anomaly(args: dict, client: FleetClient) -> "ToolRe
         visual_context_block=visual_context_block,
     )
 
-    oai = AsyncOpenAI()
+    oai = AsyncOpenAI(api_key=get_settings().openai_api_key)
     try:
         resp = await asyncio.wait_for(
             oai.chat.completions.create(
