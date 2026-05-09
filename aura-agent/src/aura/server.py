@@ -52,10 +52,19 @@ async def _broadcast(message: dict) -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     task = asyncio.create_task(_heartbeat())
+
+    voice_task: asyncio.Task | None = None
+    voice_loop = getattr(app.state, "voice_loop", None)
+    if voice_loop is not None:
+        voice_task = asyncio.create_task(voice_loop.run())
+        log.info("aura-agent.voice_loop.started")
+
     log.info("aura-agent.startup", port=8770)
     try:
         yield
     finally:
+        if voice_task is not None:
+            voice_task.cancel()
         task.cancel()
         log.info("aura-agent.shutdown")
 
