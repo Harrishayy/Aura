@@ -17,6 +17,7 @@ import httpx
 import structlog
 import websockets
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 
 from .config import RobotConfig, load_fleet_config
 from .encord_labels import get_label_store
@@ -226,6 +227,13 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="aura-fleet-aggregator", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/healthz")

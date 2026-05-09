@@ -48,7 +48,11 @@ pnpm-debug.log*
 
 # Audio / video assets that shouldn't be committed
 aura-fleet/fixtures/episodes/*/cameras/*.mp4
-aura-dashboard/public/videos/*.mp4
+aura-dashboard/public/videos/**/*.mp4
+aura-dashboard/public/qwen/**/timeline.json
+
+# Raw replay data (large, lives outside the repo / R2)
+qwen_data/
 
 # Solana keypairs (NEVER commit)
 *keypair*.json

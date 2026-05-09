@@ -20,11 +20,14 @@ export function AuraConversation() {
   const messages = useStore((s) => s.transcript);
   const agentStatus = useStore((s) => s.agentStatus);
 
-  const [collapsed, setCollapsed] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.localStorage.getItem("aura-conv-collapsed") === "true";
-  });
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [hydrated, setHydrated] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setCollapsed(window.localStorage.getItem("aura-conv-collapsed") === "true");
+    setHydrated(true);
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -39,7 +42,7 @@ export function AuraConversation() {
     localStorage.setItem("aura-conv-collapsed", String(next));
   }
 
-  if (collapsed) {
+  if (hydrated && collapsed) {
     return (
       <button
         onClick={toggle}

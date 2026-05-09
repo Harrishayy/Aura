@@ -1,8 +1,8 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Film } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { STATUS_STYLE, truncatePubkey } from "@/lib/status";
 import { IdentityTile } from "@/components/IdentityTile";
@@ -11,21 +11,31 @@ import { LiveTelemetry } from "@/components/LiveTelemetry";
 import { ComplianceLog } from "@/components/ComplianceLog";
 import { PaymentTicker } from "@/components/PaymentTicker";
 import { EvidencePanel } from "@/components/EvidencePanel";
+import { ScrubBar } from "@/components/ScrubBar";
+import { useTimeline, useScrub, frameAt, frameWindow } from "@/lib/timeline";
+import { useReadinessBarrier } from "@/lib/videoSync";
+import { assetUrl } from "@/lib/assetUrl";
 import { cn } from "@/lib/cn";
 
-export default function RobotPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
-  const robot = useStore((s) => s.fleet.robots.find((r) => r.id === id));
+const ROBOT_ID = "robot_01";
+const FEEDS = ["third_person", "wrist_left", "wrist_right"] as const;
+
+export default function Robot01Page() {
+  const robot = useStore((s) => s.fleet.robots.find((r) => r.id === ROBOT_ID));
   const setSelected = useStore((s) => s.setSelected);
 
+  const timeline = useTimeline(ROBOT_ID);
+  const { allReady, handler } = useReadinessBarrier(FEEDS);
+  const scrub = useScrub(timeline?.duration_s ?? 0, allReady);
+  const effectivePlaying = scrub.playing && allReady;
+  const syncing = scrub.playing && !allReady;
+  const frame = frameAt(timeline, scrub.t);
+  const window = frameWindow(timeline, scrub.t, 60);
+
   useEffect(() => {
-    setSelected(id);
+    setSelected(ROBOT_ID);
     return () => setSelected(null);
-  }, [id, setSelected]);
+  }, [setSelected]);
 
   if (!robot) {
     return (
@@ -34,7 +44,7 @@ export default function RobotPage({
           <div className="font-mono text-[10px] uppercase tracking-widest text-subtle">
             unknown robot
           </div>
-          <div className="mt-2 text-lg text-foreground">{id}</div>
+          <div className="mt-2 text-lg text-foreground">{ROBOT_ID}</div>
           <Link
             href="/"
             className="mt-4 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-muted hover:text-foreground"
@@ -74,6 +84,13 @@ export default function RobotPage({
               <StatusIcon className="h-3 w-3" strokeWidth={1.5} />
               {robot.status}
             </span>
+            <span
+              className="inline-flex items-center gap-1.5 border border-border-strong bg-surface-2 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-foreground"
+              title="Telemetry + cameras are replayed from a prerecorded qwen episode (not live)."
+            >
+              <Film className="h-3 w-3" strokeWidth={1.5} />
+              recorded · qwen replay
+            </span>
           </div>
           <div className="mt-1 flex items-center gap-4 font-mono text-[10px] uppercase tracking-widest text-subtle">
             <span>{robot.id.replace("_", " · ")}</span>
@@ -84,26 +101,44 @@ export default function RobotPage({
         </div>
       </div>
 
-      <div className="grid flex-1 grid-cols-2 gap-4 overflow-hidden">
-        <div className="flex flex-col gap-4 overflow-auto pr-1">
+      <ScrubBar scrub={scrub} syncing={syncing} />
+
+      <div className="grid flex-1 grid-cols-[minmax(0,620px)_1fr] gap-4 overflow-hidden">
+        <div className="flex flex-col gap-3 overflow-auto pr-1">
           <VideoFeed
-            src={`/videos/${robot.id}/third_person.mp4`}
-            title="third-person camera"
+            src={assetUrl(`/videos/${ROBOT_ID}/third_person.mp4`)}
+            title="third-person · d405"
             aspect="16/9"
+            currentTime={scrub.t}
+            playing={effectivePlaying}
+            onReadyChange={handler("third_person")}
           />
-          <VideoFeed
-            src={`/videos/${robot.id}/wrist.mp4`}
-            title="wrist camera"
-            aspect="4/3"
-          />
+          <div className="grid grid-cols-2 gap-3">
+            <VideoFeed
+              src={assetUrl(`/videos/${ROBOT_ID}/wrist_left.mp4`)}
+              title="wrist · zed left"
+              aspect="4/3"
+              currentTime={scrub.t}
+              playing={effectivePlaying}
+              onReadyChange={handler("wrist_left")}
+            />
+            <VideoFeed
+              src={assetUrl(`/videos/${ROBOT_ID}/wrist_right.mp4`)}
+              title="wrist · zed right"
+              aspect="4/3"
+              currentTime={scrub.t}
+              playing={effectivePlaying}
+              onReadyChange={handler("wrist_right")}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 overflow-auto pr-1">
-          <LiveTelemetry robotId={robot.id} />
-          <ComplianceLog robotId={robot.id} />
-          <PaymentTicker robotId={robot.id} />
-          <EvidencePanel robotId={robot.id} />
-          <IdentityTile robotId={robot.id} />
+          <LiveTelemetry robotId={ROBOT_ID} override={frame} windowFrames={window} />
+          <ComplianceLog robotId={ROBOT_ID} />
+          <PaymentTicker robotId={ROBOT_ID} />
+          <EvidencePanel robotId={ROBOT_ID} />
+          <IdentityTile robotId={ROBOT_ID} />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 robots:
   - id: robot_01
-    name: Aura-Panda-01
+    name: qwen-panda
     keypair: ~/.config/aura/robot_01.json
     episode: fixtures/episodes/robot_01
     bridge_http_port: 8767

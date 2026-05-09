@@ -18,7 +18,7 @@ dependencies = [
   "encord>=0.1.120",
   # "solana>=0.36",
   # "solders>=0.23",
-  "auxin-sdk",
+  # "auxin-sdk",  # uncomment + mount ../Auxin_Automata/sdk to use the real bridge path
 ]
 
 [tool.uv]
@@ -28,8 +28,8 @@ dev-dependencies = [
   "ruff>=0.7",
 ]
 
-[tool.uv.sources]
-auxin-sdk = { path = "../Auxin_Automata/sdk", editable = true }
+# [tool.uv.sources]
+# auxin-sdk = { path = "../Auxin_Automata/sdk", editable = true }
 
 [build-system]
 requires = ["hatchling"]

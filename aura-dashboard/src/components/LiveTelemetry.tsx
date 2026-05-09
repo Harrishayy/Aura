@@ -5,36 +5,61 @@ import { AlertTriangle } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { Sparkline } from "./Sparkline";
 import { cn } from "@/lib/cn";
+import type { TimelineFrame } from "@/lib/timeline";
 
 const JOINT_COUNT = 7;
 const ANOMALY_DELTA = 0.15;
 
-export function LiveTelemetry({ robotId }: { robotId: string }) {
-  const frames = useStore((s) => s.telemetry[robotId]);
+export function LiveTelemetry({
+  robotId,
+  override,
+  windowFrames,
+}: {
+  robotId: string;
+  override?: TimelineFrame | null;
+  windowFrames?: TimelineFrame[];
+}) {
+  const liveFrames = useStore((s) => s.telemetry[robotId]);
+  const reviewing = override !== undefined;
 
-  const latest = frames?.[frames.length - 1];
-  const empty = !frames || frames.length === 0;
+  const latest = reviewing
+    ? overrideToLatest(override)
+    : liveFrames?.[liveFrames.length - 1];
+  const empty = reviewing ? !override : !liveFrames || liveFrames.length === 0;
 
   const series = useMemo(() => {
     const out: number[][] = [];
+    const source: { joints: number[] }[] = reviewing
+      ? windowFrames && windowFrames.length > 0
+        ? windowFrames
+        : override
+          ? [{ joints: override.joints }]
+          : []
+      : (liveFrames ?? []);
     for (let j = 0; j < JOINT_COUNT; j++) {
-      out.push((frames ?? []).map((f) => f.joints[j] ?? 0));
+      out.push(source.map((f) => f.joints[j] ?? 0));
     }
     return out;
-  }, [frames]);
+  }, [liveFrames, override, windowFrames, reviewing]);
+
+  const meta = reviewing
+    ? override
+      ? `t = ${override.t.toFixed(2)}s · review`
+      : "awaiting timeline"
+    : empty
+      ? "awaiting frames"
+      : `${liveFrames!.length} samples · ${formatHz(liveFrames!)}Hz`;
+  const reviewFlags = reviewing && override ? override.fault_flags : [];
 
   return (
     <section className="border border-border bg-surface-1">
-      <SectionHeader
-        title="live telemetry"
-        meta={empty ? "awaiting frames" : `${frames!.length} samples · ${formatHz(frames!)}Hz`}
-      />
+      <SectionHeader title={reviewing ? "telemetry · review" : "live telemetry"} meta={meta} />
 
       <div className="divide-y divide-border">
         {Array.from({ length: JOINT_COUNT }).map((_, i) => {
           const angle = latest?.joints[i] ?? 0;
           const torque = latest?.torques[i] ?? 0;
-          const anomalous = isAnomalous(series[i]);
+          const anomalous = reviewing ? reviewFlags.length > 0 : isAnomalous(series[i]);
           return (
             <div
               key={i}
@@ -76,6 +101,16 @@ export function LiveTelemetry({ robotId }: { robotId: string }) {
       </div>
     </section>
   );
+}
+
+function overrideToLatest(frame: TimelineFrame | null | undefined) {
+  if (!frame) return undefined;
+  return {
+    t: frame.t,
+    joints: frame.joints,
+    torques: frame.torques,
+    gripper: { open: frame.gripper_open, force: frame.gripper_force },
+  };
 }
 
 function SectionHeader({ title, meta }: { title: string; meta: string }) {
