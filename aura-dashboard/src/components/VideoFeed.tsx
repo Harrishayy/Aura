@@ -41,6 +41,20 @@ export function VideoFeed({
 
   useEffect(() => {
     let cancelled = false;
+    // Cross-origin hosts (e.g. R2 pub-*.r2.dev) don't send CORS headers, so a
+    // HEAD probe would throw and falsely mark the file missing. Trust the URL
+    // and let <video onError> surface real load failures.
+    if (typeof window !== "undefined") {
+      try {
+        const url = new URL(src, window.location.href);
+        if (url.origin !== window.location.origin) {
+          setHasFile(true);
+          return;
+        }
+      } catch {
+        // fall through
+      }
+    }
     fetch(src, { method: "HEAD" })
       .then((r) => {
         if (!cancelled) setHasFile(r.ok);
@@ -162,6 +176,7 @@ export function VideoFeed({
                 ref.current.currentTime = currentTime;
               }
             }}
+            onError={() => setHasFile(false)}
             className={cn(
               "absolute inset-0 h-full w-full",
               compact ? "object-contain" : "object-cover",
