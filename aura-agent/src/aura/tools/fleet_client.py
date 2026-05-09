@@ -3,25 +3,21 @@ selected-robot ambient-context subscriber.
 
 Tool handlers call FleetClient for the data fetches that hit the aggregator,
 and `trigger_inference_payment` / `trigger_compliance_log` for the on-chain
-side. The latter two require Auxin SDK (commented out in pyproject.toml until
-T2 wires the bridges); they no-op + warn until then so tool dispatch stays
-unblocked.
+side. On-chain ops are dispatched through `AuxinBridge` (lazy-loaded the first
+time a tool fires); failures degrade to None + warn so the agent stays alive.
 """
 
 from __future__ import annotations
 
 import contextlib
 import json
-from typing import TYPE_CHECKING
 
 import anyio
 import httpx
 import structlog
 
 from ..config import get_settings
-
-if TYPE_CHECKING:
-    pass
+from .auxin import AuxinBridge
 
 log = structlog.get_logger()
 
@@ -78,13 +74,16 @@ class FleetClient:
         base_url: str | None = None,
         timeout: float = 5.0,
         selected: SelectedRobotContext | None = None,
+        auxin: AuxinBridge | None = None,
     ) -> None:
         self._base = (base_url or get_settings().aura_fleet_http).rstrip("/")
         self._client = httpx.AsyncClient(base_url=self._base, timeout=timeout)
         self.selected = selected
+        self._auxin = auxin if auxin is not None else AuxinBridge()
 
     async def aclose(self) -> None:
         await self._client.aclose()
+        await self._auxin.aclose()
 
     async def get_fleet_status(self) -> dict:
         r = await self._client.get("/fleet/status")
@@ -122,33 +121,15 @@ class FleetClient:
         r.raise_for_status()
         return r.json()
 
-    # The two methods below are wired through the bridge process via Auxin's existing
-    # program; left as TODOs until the Auxin SDK path-dep is uncommented.
     async def trigger_inference_payment(
         self, robot_id: str, lamports: int, reason: str
     ) -> str | None:
-        # TODO: wire to Auxin's stream_compute_payment via the bridge for {robot_id}.
-        # Returns the tx signature once the auxin-sdk path-dep is uncommented in
-        # pyproject.toml. Until then, we return None and tools surface a missing
-        # tx_signature in the on-chain receipt — voice round-trip remains unblocked.
-        log.warning(
-            "auxin.payment.skipped",
-            reason="auxin_sdk_unavailable",
-            robot_id=robot_id,
-            lamports=lamports,
-            note=reason,
-        )
-        return None
+        """Fire stream_compute_payment for `robot_id`. Returns tx sig or None on any failure."""
+        return await self._auxin.stream_payment(robot_id, lamports, reason)
 
     async def trigger_compliance_log(self, robot_id: str, payload: dict) -> str | None:
-        # TODO: wire to Auxin's log_compliance_event via the bridge for {robot_id}.
-        log.warning(
-            "auxin.compliance.skipped",
-            reason="auxin_sdk_unavailable",
-            robot_id=robot_id,
-            payload=payload,
-        )
-        return None
+        """Fire log_compliance_event for `robot_id`. Returns tx sig or None on any failure."""
+        return await self._auxin.log_compliance(robot_id, payload)
 
 
 def resolve_robot_id(args: dict, client: FleetClient) -> str | None:
