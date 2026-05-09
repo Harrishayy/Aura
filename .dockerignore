@@ -1,0 +1,37 @@
+**/.git
+**/.venv
+**/.next
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+**/.DS_Store
+**/*.pyc
+
+# Heavy assets — served from R2, never read by the fleet
+**/cameras/
+qwen_data/**/cameras/
+aura-fleet/fixtures/episodes/**/cameras/
+**/*.mp4
+**/*.mov
+**/*.webm
+
+# qwen_data backup files (~150MB, not used by replayer)
+qwen_data/**/*.bak_*
+qwen_data/**/.DS_Store
+
+# Frontend build artifacts
+aura-dashboard/.next
+aura-dashboard/public/videos
+aura-dashboard/public/qwen
+
+# Other workspaces unrelated to fleet image
+aura-agent/
+docs/
+AURA.pdf
+
+# Dev / editor
+.vscode
+.idea
+.cursor
+.claude

@@ -8,6 +8,7 @@ healthz port. The aggregator runs in-process on the fleet port.
 from __future__ import annotations
 
 import asyncio
+import os
 import signal
 import sys
 from pathlib import Path
@@ -54,14 +55,15 @@ async def main() -> None:
             http_port=robot.bridge_http_port,
         )
 
-    agg_srv = _server("aura_fleet.aggregator:app", cfg.aggregator.port, level="info")
+    agg_port = int(os.environ.get("PORT") or cfg.aggregator.port)
+    agg_srv = _server("aura_fleet.aggregator:app", agg_port, level="info")
     servers.append(agg_srv)
     tasks.append(asyncio.create_task(agg_srv.serve(), name="aggregator"))
 
     log.info(
         "qwen_panda.starting",
         robots=[r.id for r in cfg.robots],
-        agg_port=cfg.aggregator.port,
+        agg_port=agg_port,
     )
 
     loop = asyncio.get_running_loop()
