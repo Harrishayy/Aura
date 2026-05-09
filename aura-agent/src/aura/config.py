@@ -26,6 +26,8 @@ class Settings(BaseSettings):
 
     helius_rpc_url: str = "https://api.devnet.solana.com"
     hw_keypair_dir: Path = Path.home() / ".config" / "aura"
+    aura_owner_keypair_path: Path = Path.home() / ".config" / "auxin" / "owner.json"
+    aura_provider_pubkey: str = ""  # base58; if empty, payments are skipped
 
     agent_port: int = 8770
 

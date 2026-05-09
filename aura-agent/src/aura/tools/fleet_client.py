@@ -3,25 +3,21 @@ selected-robot ambient-context subscriber.
 
 Tool handlers call FleetClient for the data fetches that hit the aggregator,
 and `trigger_inference_payment` / `trigger_compliance_log` for the on-chain
-side. The latter two require Auxin SDK (commented out in pyproject.toml until
-T2 wires the bridges); they no-op + warn until then so tool dispatch stays
-unblocked.
+side. On-chain ops are dispatched through `AuxinBridge` (lazy-loaded the first
+time a tool fires); failures degrade to None + warn so the agent stays alive.
 """
 
 from __future__ import annotations
 
 import contextlib
 import json
-from typing import TYPE_CHECKING
 
 import anyio
 import httpx
 import structlog
 
 from ..config import get_settings
-
-if TYPE_CHECKING:
-    pass
+from .auxin import AuxinBridge
 
 log = structlog.get_logger()
 
@@ -78,13 +74,16 @@ class FleetClient:
         base_url: str | None = None,
         timeout: float = 5.0,
         selected: SelectedRobotContext | None = None,
+        auxin: AuxinBridge | None = None,
     ) -> None:
         self._base = (base_url or get_settings().aura_fleet_http).rstrip("/")
         self._client = httpx.AsyncClient(base_url=self._base, timeout=timeout)
         self.selected = selected
+        self._auxin = auxin if auxin is not None else AuxinBridge()
 
     async def aclose(self) -> None:
         await self._client.aclose()
+        await self._auxin.aclose()
 
     async def get_fleet_status(self) -> dict:
         r = await self._client.get("/fleet/status")
@@ -125,25 +124,28 @@ class FleetClient:
     async def trigger_inference_payment(
         self, robot_id: str, lamports: int, reason: str
     ) -> str | None:
-        """Broadcast a payment event to the dashboard via the aggregator."""
+        """Fire stream_compute_payment on chain via Auxin AND broadcast a payment
+        event to the aggregator so the dashboard sees it live. Returns the Auxin
+        tx signature (or None if the on-chain side wasn't ready)."""
         try:
             r = await self._client.post(
                 f"/robot/{robot_id}/payment",
                 json={"lamports": lamports, "reason": reason},
             )
             r.raise_for_status()
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 — dashboard broadcast is best-effort
             log.warning("payment.broadcast_failed", robot_id=robot_id, error=str(exc))
-        return None  # tx_signature populated when on-chain wiring is live
+        return await self._auxin.stream_payment(robot_id, lamports, reason)
 
     async def trigger_compliance_log(self, robot_id: str, payload: dict) -> str | None:
-        """Broadcast a compliance event to the dashboard via the aggregator."""
+        """Fire log_compliance_event on chain via Auxin AND broadcast a compliance
+        event to the aggregator. Returns the Auxin tx signature (or None)."""
         try:
             r = await self._client.post(f"/robot/{robot_id}/compliance", json=payload)
             r.raise_for_status()
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001
             log.warning("compliance.broadcast_failed", robot_id=robot_id, error=str(exc))
-        return None
+        return await self._auxin.log_compliance(robot_id, payload)
 
 
 def resolve_robot_id(args: dict, client: FleetClient) -> str | None:
