@@ -167,13 +167,18 @@ export function VideoFeed({
               compact ? "object-contain" : "object-cover",
             )}
           />
-        ) : (
+        ) : hasFile === false ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-surface-1">
             <VideoOff className="h-6 w-6 text-subtle" strokeWidth={1.25} />
             <span className="font-mono text-[10px] uppercase tracking-widest text-subtle">
-              no feed
+              camera offline
             </span>
-            <span className="font-mono text-[9px] text-subtle">{src}</span>
+          </div>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-surface-1">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-subtle">
+              loading…
+            </span>
           </div>
         )}
       </div>
