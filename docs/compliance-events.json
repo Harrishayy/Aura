@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "source_system": "Aura",
+  "events": [
+    {
+      "timestamp": "2026-05-09T12:31:14Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "telemetry_alert",
+      "severity": "MEDIUM",
+      "human_confirmation_required": false,
+      "logged_on_chain": false,
+      "status": "acknowledged"
+    },
+    {
+      "timestamp": "2026-05-09T12:32:02Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "anomaly_detection",
+      "severity": "MEDIUM",
+      "human_confirmation_required": false,
+      "logged_on_chain": false,
+      "status": "triaged"
+    },
+    {
+      "timestamp": "2026-05-09T12:33:10Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "autonomous_action",
+      "severity": "LOW",
+      "human_confirmation_required": false,
+      "logged_on_chain": true,
+      "status": "completed"
+    },
+    {
+      "timestamp": "2026-05-09T12:35:44Z",
+      "robot_id": "QIU-VIS-022",
+      "event_type": "telemetry_alert",
+      "severity": "LOW",
+      "human_confirmation_required": false,
+      "logged_on_chain": false,
+      "status": "open"
+    },
+    {
+      "timestamp": "2026-05-09T12:36:21Z",
+      "robot_id": "QIU-VIS-022",
+      "event_type": "anomaly_detection",
+      "severity": "MEDIUM",
+      "human_confirmation_required": true,
+      "logged_on_chain": true,
+      "status": "awaiting_approval"
+    },
+    {
+      "timestamp": "2026-05-09T12:36:58Z",
+      "robot_id": "QIU-VIS-022",
+      "event_type": "cloud_inference_request",
+      "severity": "MEDIUM",
+      "human_confirmation_required": true,
+      "logged_on_chain": true,
+      "status": "submitted"
+    },
+    {
+      "timestamp": "2026-05-09T12:37:12Z",
+      "robot_id": "QIU-VIS-022",
+      "event_type": "operator_approval",
+      "severity": "MEDIUM",
+      "human_confirmation_required": false,
+      "logged_on_chain": true,
+      "status": "approved"
+    },
+    {
+      "timestamp": "2026-05-09T12:38:05Z",
+      "robot_id": "MSR-007",
+      "event_type": "anomaly_detection",
+      "severity": "HIGH",
+      "human_confirmation_required": true,
+      "logged_on_chain": true,
+      "status": "awaiting_approval"
+    },
+    {
+      "timestamp": "2026-05-09T12:38:33Z",
+      "robot_id": "MSR-007",
+      "event_type": "telemetry_alert",
+      "severity": "HIGH",
+      "human_confirmation_required": true,
+      "logged_on_chain": false,
+      "status": "open"
+    },
+    {
+      "timestamp": "2026-05-09T12:39:05Z",
+      "robot_id": "MSR-007",
+      "event_type": "operator_approval",
+      "severity": "HIGH",
+      "human_confirmation_required": false,
+      "logged_on_chain": true,
+      "status": "approved"
+    },
+    {
+      "timestamp": "2026-05-09T12:39:40Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "telemetry_alert",
+      "severity": "HIGH",
+      "human_confirmation_required": true,
+      "logged_on_chain": false,
+      "status": "open"
+    },
+    {
+      "timestamp": "2026-05-09T12:39:58Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "escalation_event",
+      "severity": "HIGH",
+      "human_confirmation_required": true,
+      "logged_on_chain": true,
+      "status": "escalated"
+    },
+    {
+      "timestamp": "2026-05-09T12:40:14Z",
+      "robot_id": "ARX-IMR-014",
+      "event_type": "operator_approval",
+      "severity": "HIGH",
+      "human_confirmation_required": false,
+      "logged_on_chain": true,
+      "status": "approved"
+    },
+    {
+      "timestamp": "2026-05-09T12:41:02Z",
+      "robot_id": "MSR-007",
+      "event_type": "escalation_event",
+      "severity": "CRITICAL",
+      "human_confirmation_required": true,
+      "logged_on_chain": true,
+      "status": "escalated"
+    }
+  ]
+}
+
