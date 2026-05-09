@@ -50,8 +50,11 @@ DIM = "\x1b[90m"
 RESET = "\x1b[0m"
 
 
-async def _record_until_silence() -> bytes:
-    """Record from default mic until 1.2s of silence after voice; return 16kHz mono WAV."""
+async def _record_until_silence(max_s: float = MAX_RECORDING_S) -> bytes:
+    """Record from default mic until 1.2s of silence after voice; return 16kHz mono WAV.
+
+    `max_s` caps total wall time — used by the confirmation flow with a 5s budget.
+    """
     chunk_size = int(SAMPLE_RATE * CHUNK_S)
     max_silence_chunks = int(SILENCE_DURATION_S / CHUNK_S)
     voiced = 0
@@ -61,7 +64,7 @@ async def _record_until_silence() -> bytes:
     stream = sd.InputStream(samplerate=SAMPLE_RATE, channels=1, dtype="float32")
     await anyio.to_thread.run_sync(stream.start)
     try:
-        deadline = time.monotonic() + MAX_RECORDING_S
+        deadline = time.monotonic() + max_s
         while time.monotonic() < deadline:
             data, _ = await anyio.to_thread.run_sync(stream.read, chunk_size)
             chunks.append(data.copy())
