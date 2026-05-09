@@ -1,0 +1,47 @@
+[project]
+name = "aura-agent"
+version = "0.1.0"
+description = "Aura voice-native operations agent — voice loop + 5 fleet-aware tools"
+requires-python = ">=3.11"
+dependencies = [
+  "openai>=1.50",
+  "anthropic>=0.40",
+  "elevenlabs>=1.0",
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "websockets>=13",
+  "httpx>=0.27",
+  "pydantic>=2.9",
+  "pydantic-settings>=2.5",
+  "anyio>=4.6",
+  "structlog>=24.4",
+  "sounddevice>=0.5",
+  "numpy>=2.0",
+  "python-dotenv>=1.0",
+  # "auxin-sdk",  # uncomment when Auxin_Automata is checked out alongside
+]
+
+[tool.uv]
+dev-dependencies = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "ruff>=0.7",
+]
+
+# [tool.uv.sources]
+# auxin-sdk = { path = "../../Auxin_Automata/sdk", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aura"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

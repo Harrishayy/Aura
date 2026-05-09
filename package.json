@@ -1,0 +1,14 @@
+{
+  "name": "aura",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n web,agent,fleet -c blue,magenta,cyan \"pnpm --filter aura-dashboard dev\" \"pnpm --filter aura-agent dev\" \"pnpm --filter aura-fleet dev\"",
+    "build": "pnpm --filter aura-dashboard build",
+    "lint": "pnpm --filter aura-dashboard lint",
+    "install:py": "cd aura-agent && uv sync && cd ../aura-fleet && uv sync"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  },
+  "packageManager": "pnpm@10.26.1"
+}

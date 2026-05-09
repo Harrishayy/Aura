@@ -1,0 +1,10 @@
+{
+  "name": "aura-fleet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "uv run python scripts/run_fleet.py",
+    "test": "uv run pytest",
+    "lint": "uv run ruff check ."
+  }
+}

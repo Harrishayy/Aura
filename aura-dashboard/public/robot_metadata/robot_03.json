@@ -1,0 +1,14 @@
+{
+  "name": "Aura-Panda-03",
+  "manufacturer": "Franka Emika",
+  "model": "Panda 7-DOF",
+  "serial": "FE-PANDA-2024-0003",
+  "deployment_date": "2026-04-01",
+  "operator": "Aura Demo Fleet",
+  "wallet_pubkey": "",
+  "agent_pda": "",
+  "registration_tx": "",
+  "explorer_url": "",
+  "episode_hash": "",
+  "image_url": "/robot_images/panda_03.png"
+}

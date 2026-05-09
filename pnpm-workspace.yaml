@@ -1,0 +1,8 @@
+packages:
+  - "aura-dashboard"
+  - "aura-agent"
+  - "aura-fleet"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

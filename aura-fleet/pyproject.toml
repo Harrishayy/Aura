@@ -1,0 +1,46 @@
+[project]
+name = "aura-fleet"
+version = "0.1.0"
+description = "Aura fleet pipeline — VideoSource for VLA episodes + multi-bridge runner + HTTP/WS aggregator"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "websockets>=13",
+  "httpx>=0.27",
+  "pydantic>=2.9",
+  "pydantic-settings>=2.5",
+  "anyio>=4.6",
+  "structlog>=24.4",
+  "pyyaml>=6.0",
+  "numpy>=2.0",
+  "python-dotenv>=1.0",
+  # "solana>=0.36",
+  # "solders>=0.23",
+  # "auxin-sdk",  # uncomment when Auxin_Automata is checked out alongside
+]
+
+[tool.uv]
+dev-dependencies = [
+  "pytest>=8.3",
+  "pytest-asyncio>=0.24",
+  "ruff>=0.7",
+]
+
+# [tool.uv.sources]
+# auxin-sdk = { path = "../../Auxin_Automata/sdk", editable = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aura_fleet"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

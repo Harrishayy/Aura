@@ -1,0 +1,24 @@
+robots:
+  - id: robot_01
+    name: Aura-Panda-01
+    keypair: ~/.config/aura/robot_01.json
+    episode: fixtures/episodes/robot_01
+    bridge_http_port: 8767
+    bridge_ws_port: 8766
+
+  - id: robot_02
+    name: Aura-Panda-02
+    keypair: ~/.config/aura/robot_02.json
+    episode: fixtures/episodes/robot_02
+    bridge_http_port: 8768
+    bridge_ws_port: 8771
+
+  - id: robot_03
+    name: Aura-Panda-03
+    keypair: ~/.config/aura/robot_03.json
+    episode: fixtures/episodes/robot_03
+    bridge_http_port: 8769
+    bridge_ws_port: 8772
+
+aggregator:
+  port: 8780
