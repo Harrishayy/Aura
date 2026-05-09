@@ -64,3 +64,4 @@ qwen_data/
 
 # Auxin Automata — immutable infrastructure, referenced as path dep only
 Auxin_Automata/
+.claude
