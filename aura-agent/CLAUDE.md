@@ -39,7 +39,7 @@ For any tool with `cost_lamports > 0`:
 3. Transcribe + classify intent:
    - regex `{yes, yeah, go, do it, proceed, confirm, sure}` → execute
    - regex `{no, stop, cancel, wait, hold}` → abort with `tool_result {aborted: true}`
-   - ambiguous → one-shot **Claude Haiku 4.5** ("Does this utterance mean YES or NO? One word.") with 1s timeout. Default NO on timeout.
+   - ambiguous → one-shot **`gpt-4o-mini`** ("Does this utterance mean YES or NO? One word.") with 1s timeout. Default NO on timeout. (Playbook called for Claude Haiku 4.5; team swapped to OpenAI to avoid a second provider key. The redundancy pitch beat is sacrificed.)
 4. Log both `confirmation_request` and `confirmation_resolved` as compliance events on chain.
 
 The cost is **hardcoded per tool**. Never let the LLM parametrise the cost.

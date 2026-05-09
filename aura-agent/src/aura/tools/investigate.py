@@ -4,12 +4,10 @@ from __future__ import annotations
 
 import asyncio
 import json
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from . import ToolResult
-    from .fleet_client import FleetClient
+from openai import AsyncOpenAI
 
+from .fleet_client import FleetClient, resolve_robot_id
 
 COST_LAMPORTS = 800_000
 VIDEO_FPS = 30.0
@@ -81,10 +79,10 @@ def _format_visual_context(labels: list[dict], attestation_tx: str) -> str:
 
         if lb_type == "temporal_segment":
             fr = lb.get("frame_range", [0, 0])
-            extra = f"(frames {fr[0]}–{fr[1]})"
+            extra = f"(frames {fr[0]}\u2013{fr[1]})"
         elif lb_type == "bbox":
             b = lb.get("bbox", {})
-            extra = f"bbox at ({b.get('x', 0):.2f}, {b.get('y', 0):.2f}) size {b.get('w', 0):.2f}×{b.get('h', 0):.2f}"
+            extra = f"bbox at ({b.get('x', 0):.2f}, {b.get('y', 0):.2f}) size {b.get('w', 0):.2f}\u00d7{b.get('h', 0):.2f}"
         elif lb_type == "keypoint":
             p = lb.get("point", {})
             extra = f"point at ({p.get('x', 0):.2f}, {p.get('y', 0):.2f})"
@@ -122,10 +120,10 @@ def _build_spoken_reasoning(diagnosis: dict, labels: list[dict]) -> str:
     return f"Diagnosis: {cause}. Recommended action: {action}."
 
 
-async def handle_investigate_anomaly(args: dict, client: "FleetClient") -> "ToolResult":
+async def handle_investigate_anomaly(args: dict, client: FleetClient) -> "ToolResult":
     from . import ToolResult
 
-    robot_id = args.get("robot_id") or "robot_02"
+    robot_id = resolve_robot_id(args, client) or args.get("robot_id") or "robot_02"
     event_id = args.get("event_id", "")
 
     try:
@@ -159,9 +157,8 @@ async def handle_investigate_anomaly(args: dict, client: "FleetClient") -> "Tool
         visual_context_block=visual_context_block,
     )
 
+    oai = AsyncOpenAI()
     try:
-        import openai
-        oai = openai.AsyncOpenAI()
         resp = await asyncio.wait_for(
             oai.chat.completions.create(
                 model="gpt-4o",
@@ -183,6 +180,12 @@ async def handle_investigate_anomaly(args: dict, client: "FleetClient") -> "Tool
             "confidence_pct": 0,
         }
 
+    tx = await client.trigger_inference_payment(robot_id, COST_LAMPORTS, "anomaly diagnosis")
+    await client.trigger_compliance_log(
+        robot_id,
+        {"tool_name": "investigate_anomaly", "args": args, "diagnosis": diagnosis},
+    )
+
     evidence_frame = _best_evidence_frame(labels)
     cited_hashes = [lb.get("encord_object_hash", "") for lb in labels[:5]]
     reasoning = _build_spoken_reasoning(diagnosis, labels)
@@ -200,6 +203,6 @@ async def handle_investigate_anomaly(args: dict, client: "FleetClient") -> "Tool
             "encord_labels_used": cited_hashes,
         },
         cost_lamports=COST_LAMPORTS,
-        tx_signature=None,
+        tx_signature=tx,
         reasoning=reasoning,
     )

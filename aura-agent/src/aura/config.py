@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     anthropic_api_key: str = ""
     elevenlabs_api_key: str = ""
-    atlas_voice_id: str = ""
+    atlas_voice_id: str = "XB0fDUnXU5powFXDhCwa"  # ElevenLabs "Charlotte" — calm, mature
     aura_reasoning_model: str = "gpt-4o"
 
     aura_fleet_http: str = "http://localhost:8780"
