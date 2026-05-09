@@ -28,7 +28,13 @@ log = structlog.get_logger("qwen-panda")
 
 def _server(app, port: int, level: str = "warning") -> uvicorn.Server:
     return uvicorn.Server(uvicorn.Config(
-        app, host="0.0.0.0", port=port, log_level=level,
+        app,
+        host="0.0.0.0",
+        port=port,
+        log_level=level,
+        ws_ping_interval=15,
+        ws_ping_timeout=15,
+        timeout_keep_alive=30,
     ))
 
 

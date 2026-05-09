@@ -10,6 +10,7 @@ from __future__ import annotations
 import asyncio
 import json
 import time
+from collections import deque
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -46,6 +47,13 @@ class _Subscriber:
 
 _fleet_subscribers: set[_Subscriber] = set()
 _selected_subscribers: set[WebSocket] = set()
+
+# Rolling per-robot history of real compliance payloads (FleetMessage shape),
+# populated as events flow through _bridge_ws_pump. Served by /robot/{id}/recent_events
+# so the dashboard's ComplianceLog backfill on mount sees real events instead of
+# placeholders. Capped to keep memory bounded across long demo runs.
+_COMPLIANCE_HISTORY_MAX = 50
+_compliance_history: dict[str, deque[dict]] = {}
 
 _cfg = None
 
@@ -117,6 +125,14 @@ _REASON_CODE_LABELS: dict[int, str] = {
 _EXPLORER_BASE = "https://explorer.solana.com"
 
 
+def _record_compliance(robot_id: str, payload: dict) -> None:
+    buf = _compliance_history.get(robot_id)
+    if buf is None:
+        buf = deque(maxlen=_COMPLIANCE_HISTORY_MAX)
+        _compliance_history[robot_id] = buf
+    buf.append(payload)
+
+
 def _translate_bridge_message(robot_id: str, raw_payload: dict) -> dict | None:
     """
     Translate an Auxin bridge WS message into the FleetMessage shape
@@ -167,6 +183,7 @@ def _translate_bridge_message(robot_id: str, raw_payload: dict) -> dict | None:
             "tx_signature": tx_sig,
             "explorer_url": explorer_url,
         }
+        _record_compliance(robot_id, payload)
         return {"robot_id": robot_id, "type": "compliance", "payload": payload}
 
     if msg_type == "payment_event":
@@ -241,17 +258,22 @@ async def _bridge_ws_pump(robot: RobotConfig) -> None:
             ) as ws:
                 log.info("bridge_ws.connected", robot_id=robot.id, uri=uri)
                 async for raw in ws:
-                    if not _fleet_subscribers:
-                        continue
+                    # Always translate so compliance events land in _compliance_history,
+                    # even when no dashboard is connected — the recent_events backfill
+                    # endpoint reads from that buffer when a dashboard later mounts.
                     try:
                         raw_payload = json.loads(raw)
                         translated = _translate_bridge_message(robot.id, raw_payload)
-                        if translated is None:
-                            continue
-                        msg = json.dumps(translated)
                     except Exception:
                         continue
-                    _enqueue_to_subscribers(msg)
+                    if translated is None:
+                        continue
+                    if _fleet_subscribers:
+                        try:
+                            msg = json.dumps(translated)
+                        except Exception:
+                            continue
+                        _enqueue_to_subscribers(msg)
         except Exception as exc:
             log.warning("bridge_ws.disconnected", robot_id=robot.id, error=str(exc))
         await asyncio.sleep(2)
@@ -330,30 +352,31 @@ async def robot_status(robot_id: str) -> dict:
 
 @app.get("/robot/{robot_id}/recent_events")
 async def recent_events(robot_id: str, n: int = 5) -> list[dict]:
-    return [
-        {
-            "hash": f"sha256:placeholder-{i}",
-            "severity": 1,
-            "reason_code": "placeholder",
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "tx_signature": f"PLACEHOLDER_TX_{robot_id}_{i}",
-            "explorer_url": f"https://explorer.solana.com/tx/PLACEHOLDER_TX_{robot_id}_{i}?cluster=devnet",
-        }
-        for i in range(min(n, 3))
-    ]
+    """Return the last `n` compliance events emitted by this robot's bridge.
+
+    Pulls from the in-memory rolling buffer populated by _translate_bridge_message.
+    Events are returned newest-first to match the dashboard's sort default.
+    """
+    buf = _compliance_history.get(robot_id)
+    if not buf:
+        return []
+    n = max(1, min(n, _COMPLIANCE_HISTORY_MAX))
+    return list(reversed(list(buf)))[:n]
 
 
 @app.post("/robot/{robot_id}/compliance")
 async def agent_compliance(robot_id: str, body: dict) -> dict:
     """Called by the Aura agent to surface tool-call compliance events in the dashboard."""
+    tx_sig = body.get("tx_signature", "")
     payload = {
         "hash": f"agent:{body.get('tool_name', 'tool')}:{int(datetime.now(timezone.utc).timestamp())}",
         "severity": body.get("severity", 1),
         "reason_code": body.get("tool_name", "agent_tool"),
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "tx_signature": body.get("tx_signature", ""),
-        "explorer_url": "",
+        "tx_signature": tx_sig,
+        "explorer_url": f"{_EXPLORER_BASE}/tx/{tx_sig}?cluster=devnet" if tx_sig else "",
     }
+    _record_compliance(robot_id, payload)
     msg = json.dumps({"robot_id": robot_id, "type": "compliance", "payload": payload})
     _enqueue_to_subscribers(msg)
     log.info("fleet.agent_compliance", robot_id=robot_id, tool=body.get("tool_name"))

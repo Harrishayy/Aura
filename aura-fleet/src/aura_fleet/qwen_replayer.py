@@ -449,6 +449,22 @@ def make_apps(robot_id: str, data_dir: Path | None = None) -> tuple[FastAPI, Fas
             total=len(state.subscribers),
             robot_id=state.robot_id,
         )
+        # Re-emit a session_start so the aggregator pump's history backfill
+        # contains it even if the pump connected after the boot-time emission.
+        if state.rows:
+            session_frame = _build_telemetry_frame(state.rows[0], ["replay_session_start"])
+            try:
+                msg = json.dumps(
+                    _build_compliance_message(
+                        state,
+                        session_frame,
+                        COMPLIANCE_SEVERITY_NORMAL,
+                        REASON_CODE_REPLAY_SESSION_START,
+                    )
+                )
+                sub.queue.put_nowait(msg)
+            except Exception:
+                pass
         try:
             while True:
                 await websocket.receive_text()

@@ -120,6 +120,9 @@ async def main() -> None:
         host="0.0.0.0",
         port=cfg.aggregator.port,
         log_level="info",
+        ws_ping_interval=15,
+        ws_ping_timeout=15,
+        timeout_keep_alive=30,
     )
     agg_server = uvicorn.Server(agg_config)
     tasks.append(asyncio.create_task(agg_server.serve(), name="aggregator"))
